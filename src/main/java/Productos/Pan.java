@@ -7,7 +7,7 @@ public class Pan extends Producto {
         registrarNuevoProducto();
     }
 
-    public Pan(String nombre, int valor,int stock, String tipo) {
-        super(nombre, valor, stock, tipo);
+    public Pan(String nombre, int valor,int stock) {
+        super(nombre, valor, stock, "Fruta");
     }
 }

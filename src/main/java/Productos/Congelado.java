@@ -8,6 +8,6 @@ public class Congelado extends Producto {
     }
 
     public Congelado(String nombre, int valor,int stock, String tipo) {
-        super(nombre, valor,stock, tipo);
+        super(nombre, valor,stock,"Congelado");
     }
 }

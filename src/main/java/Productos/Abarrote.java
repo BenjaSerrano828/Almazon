@@ -7,7 +7,7 @@ public class Abarrote extends Producto {
         registrarNuevoProducto();
     }
 
-    public Abarrote(String nombre, int valor,int stock, String tipo) {
-        super(nombre, valor,stock, tipo);
+    public Abarrote(String nombre, int valor,int stock) {
+        super(nombre, valor,stock, "Abarrote");
     }
 }

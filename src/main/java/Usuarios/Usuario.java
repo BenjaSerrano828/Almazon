@@ -1,5 +1,12 @@
 package Usuarios;
 
+import Productos.Fruta;
+import Productos.Producto;
+import Sesion.Sesion;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public abstract class Usuario {
     protected int id;
     protected static int idInicial=1;
@@ -9,6 +16,8 @@ public abstract class Usuario {
     protected String nombreUsuario;
     protected String contrasena;
     protected int permiso;
+
+    Scanner teclado = new Scanner(System.in);
 
     public Usuario(String rut, String nombre, String nombreUsuario, String contrasena) {
         this.rut = rut;
@@ -20,6 +29,10 @@ public abstract class Usuario {
 
     public Usuario() {
     }
+
+    //------------------------------------------------------------------------
+
+
 
     public String getNombre() {
         return nombre;

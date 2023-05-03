@@ -7,7 +7,7 @@ public class Snack extends Producto {
         registrarNuevoProducto();
     }
 
-    public Snack(String nombre, int valor,int stock, String tipo) {
-        super(nombre, valor,stock, tipo);
+    public Snack(String nombre, int valor,int stock) {
+        super(nombre, valor,stock, "Snack");
     }
 }
