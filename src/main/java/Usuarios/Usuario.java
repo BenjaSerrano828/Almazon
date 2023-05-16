@@ -11,7 +11,7 @@ public abstract class Usuario {
     protected int id;
     protected static int idInicial=1;
 
-    protected String rut;
+    private String rut;
     protected String nombre;
     protected String nombreUsuario;
     protected String contrasena;
@@ -46,8 +46,7 @@ public abstract class Usuario {
         return contrasena;
     }
 
-    public int getPermiso() {
-        return permiso;
+    public String getRut() {
+        return rut;
     }
-
 }

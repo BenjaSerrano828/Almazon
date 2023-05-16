@@ -1,6 +1,6 @@
-projectKey=ProyectoPrograAvanzada
+projectKey=Almazon
 serverUrl=http://localhost:9000
 serverVersion=9.9.0.65466
-dashboardUrl=http://localhost:9000/dashboard?id=ProyectoPrograAvanzada
-ceTaskId=AYfJxlm1ONwYGFYREy-_
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYfJxlm1ONwYGFYREy-_
+dashboardUrl=http://localhost:9000/dashboard?id=Almazon
+ceTaskId=AYfkJsXiF4DOiv5FENpJ
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYfkJsXiF4DOiv5FENpJ

@@ -1,14 +1,18 @@
 package Productos;
 
-import Productos.Producto;
-
 public class Fruta extends Producto {
 
-    public Fruta(String nombre, int valor,int stock) {
+    public Fruta(String nombre, int valor, int stock) {
         super(nombre, valor,stock,"Fruta");
     }
 
     public Fruta() {
-        registrarNuevoProducto();
+    }
+
+    public Fruta(Producto p) {
+        transformarFruta(p);
+    }
+    public void transformarFruta(Producto p){
+        ((Fruta) p ).getClass();
     }
 }
