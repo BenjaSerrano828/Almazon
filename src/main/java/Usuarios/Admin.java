@@ -254,7 +254,12 @@ public class Admin extends Usuario {
         System.out.println("Ingrese en nombre del nuevo Cajero");
         String nombre = registrarNombre.nextLine();
         System.out.println("Ingrese el rut del nuevo Cajero");
-        String rut = teclado.next();
+        String rut;
+        do {
+            System.out.println("Ingrese el rut del nuevo Admin");
+            rut = teclado.next();
+        }while(validarRut(rut)!=true);
+
         System.out.println("Ingrese el nombre de usuario del nuevo Cajero");
         String nombreUsuario = teclado.next();
         System.out.println("Ingrese la contraseña del nuevo Cajero");
@@ -264,7 +269,6 @@ public class Admin extends Usuario {
         String contenido = cajero.toString();
         GestorArchivo gestorArchivo = new GestorArchivo();
         gestorArchivo.nuevaLinea("ArchivosBD/admins.txt",contenido);
-
     }
 
     public void registrarNuevoAdmin() {

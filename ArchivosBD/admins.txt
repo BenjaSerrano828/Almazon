@@ -1,4 +1,9 @@
 
+Admin
+Nombre: Admin Supremo
+Rut: RUT ADMIN
+Nombre de Usuario: admin
+Contraseña: admin123
 
 Admin
 Nombre: Sebastian Torres

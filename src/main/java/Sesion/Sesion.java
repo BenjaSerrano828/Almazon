@@ -3,8 +3,6 @@ package Sesion;
 import Usuarios.Admin;
 import Usuarios.Cajero;
 import Usuarios.Usuario;
-
-import java.io.Console;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,8 +14,6 @@ public class Sesion {
 
     private ArrayList<Usuario> usuarios = new ArrayList<>();
 
-    Usuario adminSupremo = new Admin("rut del dueño", "adminSUPREMO", "admin", "admin123");
-
     public void anadirUsuario(Usuario u) {
         usuarios.add(u);
     }
@@ -25,34 +21,37 @@ public class Sesion {
     Scanner teclado = new Scanner(System.in);
 
     public Sesion() {
-        //iniciarSesion();
     }
 
     public void iniciarSesion() {
-        anadirUsuario(adminSupremo);
         cargarDatos();
+        System.out.println(usuarios.get(0));
 
-        System.out.println(usuarios);
         System.out.println("\n-----Menu Iniciar Sesion-----");
         System.out.print("Ingrese su nombre de Usuario: ");
         String nombreUsuarioIngresado = teclado.next();
         System.out.print("Ingrese su contraseña: ");
         String contrasenaIngresada = teclado.next();
 
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getNombreUsuario().equals(nombreUsuarioIngresado)
-                    &
-                    usuarios.get(i).getContrasena().equals(contrasenaIngresada)){
-                System.out.println("Nombre de usuario y contraseña correctos");
-                direccionarMenu(usuarios.get(i));
 
-            }
-            else{
-                System.out.println("nombre de usuario o contraseña incorrectos");
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)==true){
+                direccionarMenu(usuarios.get(i));
+            }else {
                 iniciarSesion();
             }
         }
     }
+    public boolean validarSesion(ArrayList<Usuario> usuarios,String nombreUsuario,String contrasena){
+        for  (Usuario u: usuarios) {
+            if (u.getNombreUsuario().equals(nombreUsuario)
+                    && u.getContrasena().equals(contrasena)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void direccionarMenu(Usuario u) {
 
