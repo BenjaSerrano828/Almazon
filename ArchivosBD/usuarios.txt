@@ -1,0 +1,21 @@
+[
+Admin
+Nombre: Seba Torres
+Rut: RUT ADMIN
+Nombre de Usuario: admin
+Contraseña: admin123, 
+Admin
+Nombre: Seba Torres
+Rut: 20.645.607-8
+Nombre de Usuario: SebaSTU
+Contraseña: sebastu12, 
+Admin
+Nombre: Benjamin Serrano
+Rut: 20.587.734-7
+Nombre de Usuario: benja23
+Contraseña: benja2310, 
+Cajero
+Nombre: Sebastian Torres
+Rut: 20.645.607-8
+Nombre de Usuario: SebaSTU12
+Contraseña: sebastu12]]

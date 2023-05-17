@@ -8,4 +8,9 @@ public class Snack extends Producto {
     public Snack(String nombre, int valor,int stock) {
         super(nombre, valor,stock, "Snack");
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

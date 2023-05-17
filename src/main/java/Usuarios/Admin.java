@@ -1,6 +1,7 @@
 package Usuarios;
 
 import BaseDeDatos.GestorArchivo;
+import BaseDeDatos.GestorBaseDatos;
 import Productos.*;
 import Sesion.Sesion;
 
@@ -10,25 +11,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Admin extends Usuario {
-    private int idActual = 1;
     private static Scanner teclado =  new Scanner(System.in);
-
-    //private ArrayList<Usuario> usuarios = new ArrayList<>();
-    List<Usuario> usuariosTxt = new ArrayList<>();
-
     private ArrayList<Producto> productos = new ArrayList<>();
+
+    private ArrayList<Usuario> usuariosParaEditar = new ArrayList<>();
+
+
     public Admin() {
     }
     public Admin(String rut, String nombre, String nombreUsuario, String contrasena) {
         super(rut, nombre, nombreUsuario, contrasena);
-        this.permiso=1; //1 es todos los permisos de admin
     }
 
     public void iniciarMenuPrincipalAdmin() {
+
         int opcion = -1;
         do{
             try{
@@ -61,11 +60,9 @@ public class Admin extends Usuario {
     }
 
 
-    private void menuAdministrarUsuario() { //ESTO NO VA EN SESION, VA EN ADMIN
+    private void menuAdministrarUsuario() {
 
         int opcion = -1;
-
-
         do{
             try{
                 System.out.println("\nBienvenido al Menu de Administracion de Usuarios");
@@ -88,7 +85,7 @@ public class Admin extends Usuario {
                         break;
                     case 3:
                         //Pendiente hasta la implementacion de BD
-                        editarUsuario();
+                        buscarUsuarioAEditar();
                         break;
                     case 4:
                         //Pendiente hasta la implementacion de BD
@@ -102,45 +99,108 @@ public class Admin extends Usuario {
             }catch (InputMismatchException e){
                 System.out.println("Error al seleccionar opcion");
                 teclado.next();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
 
         }while(opcion!=0);
     }
-
-    public void editarUsuario() throws IOException {
+    public void buscarUsuarioAEditar() {
         mostrarUsuarios();
+        GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
 
-        Path path = Paths.get("ArchivosBD/admins.txt");
-        try {
-            ArrayList<String> lineas = (ArrayList<String>) Files.readAllLines(path);
+        System.out.println(usuariosParaEditar.get(1));
 
-            for (int i = 0; i < lineas.size(); i++) {
-                if (lineas.get(i).equals("Admin")) {
-                    String nombre = lineas.get(i + 1).substring(8);
-                    String rut = lineas.get(i + 2).substring(5);
-                    String nombreUsuario = lineas.get(i + 3).substring(19);
-                    String contrasena = lineas.get(i + 4).substring(12);
-                    usuariosTxt.add(new Admin(rut, nombre, nombreUsuario, contrasena));
-                } else if (lineas.get(i).equals("Cajero")) {
-                    String nombre = lineas.get(i + 1).substring(8);
-                    String rut = lineas.get(i + 2).substring(5);
-                    String nombreUsuario = lineas.get(i + 3).substring(19);
-                    String contrasena = lineas.get(i + 4).substring(12);
-                    usuariosTxt.add(new Cajero(rut,nombre, nombreUsuario, contrasena));
-                }
-            }
+        System.out.print("Ingrese el rut del usuario a editar: ");
+        String rutIngresado = teclado.next();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        editarUsuario(encontrarUsuarioPorRut(usuariosParaEditar,rutIngresado));
 
     }
 
+    public Usuario encontrarUsuarioPorRut(ArrayList<Usuario> usuarios,String rut){
+        for  (Usuario u: usuarios) {
+            if (u.getRut().equals(rut)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void editarUsuario(Usuario u){
+        int opcion = -1;
+        do {
+            try{
+                System.out.println("--- Que desea editar?---");
+                System.out.println("1.- Nombre");
+                System.out.println("2.- Nombre de Usuario");
+                System.out.println("3.- Contraseña");
+                System.out.println("4.- Guardar");
+                System.out.println("0.- Atras");
+
+                opcion = teclado.nextInt();
+
+                switch (opcion){
+                    case 1:
+                        editarNombre(u);
+                        break;
+                    case 2:
+                        editarNombreUsuario(u);
+                        break;
+                    case 3:
+                        editarContrasena(u);
+                        break;
+                    case 4:
+                        guardarCambios();
+                    case 0:
+                        break;
+                }
+
+            }catch (InputMismatchException e){
+                System.out.println("Error al seleccionar opcion");
+                teclado.next();
+            }
+        }while (opcion!=0);
+
+    }
+
+    public void guardarCambios() {
+
+        GestorArchivo gestorArchivo = new GestorArchivo();
+        String contenido = usuariosParaEditar.toString();
+        gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt",contenido);
+    }
+
+    public void editarNombre(Usuario u){
+        Scanner registrarNombre = new Scanner(System.in);
+        System.out.println("Nombre actual: "+ u.getNombre());
+        System.out.print("Ingrese el nuevo nombre: ");
+        String nuevoNombre = registrarNombre.nextLine();
+        u.setNombre(nuevoNombre);
+        System.out.println("Se modifico correctamente el nombre");
+
+    }
+    public void editarNombreUsuario(Usuario u){
+        Scanner registrarNombreUsuario = new Scanner(System.in);
+
+        System.out.println("Nombre de usuario actual: "+ u.getNombreUsuario());
+        System.out.print("Ingrese el nuevo nombre de usuario: ");
+        String nuevoNombreUsuario = registrarNombreUsuario.next();
+        u.setNombreUsuario(nuevoNombreUsuario);
+        System.out.println("Se modifico correctamente el nombre de usuario");
+    }
+    public void editarContrasena(Usuario u){
+        Scanner registrarContra = new Scanner(System.in);
+
+        System.out.println("Contraseña actual: "+ u.getContrasena());
+        System.out.print("Ingrese la nueva contrasena: ");
+        String nuevaContra = registrarContra.next();
+        u.setContrasena(nuevaContra);
+        System.out.println("Se modifico correctamente la contraseña");
+    }
+
+
     public void mostrarUsuarios(){
         GestorArchivo gestorArchivo = new GestorArchivo();
-        System.out.println(gestorArchivo.leerArchivo("ArchivosBD/admins.txt"));
+        System.out.println(gestorArchivo.leerArchivo("ArchivosBD/usuarios.txt"));
 
     }
 
@@ -180,6 +240,8 @@ public class Admin extends Usuario {
     }
 
     public void registrarNuevoProducto() {
+        System.out.println(productos);
+
         Scanner teclado = new Scanner(System.in);
         System.out.println("\nQue tipo de producto desea registrar: ");
         System.out.println("1- Fruta");
@@ -200,7 +262,10 @@ public class Admin extends Usuario {
                 switch (opcion){
                     case 1:
                         Producto fruta = new Fruta(nombre,valor,stock);
-                        productos.add(fruta);
+                        String frutaString = fruta.toString();
+                        GestorArchivo gestorArchivo = new GestorArchivo();
+                        gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",frutaString);
+
                         System.out.println("Fruta registrada");
                         iniciarMenuPrincipalAdmin();
                         break;
@@ -253,10 +318,10 @@ public class Admin extends Usuario {
         Scanner registrarNombre = new Scanner(System.in);
         System.out.println("Ingrese en nombre del nuevo Cajero");
         String nombre = registrarNombre.nextLine();
-        System.out.println("Ingrese el rut del nuevo Cajero");
         String rut;
         do {
-            System.out.println("Ingrese el rut del nuevo Admin");
+            System.out.println("RUT con puntos y guion. Ej: 12.345.678-9");
+            System.out.println("Ingrese el rut del nuevo Cliente");
             rut = teclado.next();
         }while(validarRut(rut)!=true);
 
@@ -268,7 +333,7 @@ public class Admin extends Usuario {
 
         String contenido = cajero.toString();
         GestorArchivo gestorArchivo = new GestorArchivo();
-        gestorArchivo.nuevaLinea("ArchivosBD/admins.txt",contenido);
+        gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
     }
 
     public void registrarNuevoAdmin() {
@@ -277,46 +342,68 @@ public class Admin extends Usuario {
         String nombre = registrarNombre.nextLine();
         String rut;
         do {
+            System.out.println("RUT con puntos y guion. Ej: 12.345.678-9");
             System.out.println("Ingrese el rut del nuevo Admin");
             rut = teclado.next();
         }while(validarRut(rut)!=true);
-
 
         System.out.println("Ingrese el nombre de usuario del nuevo Admin");
         String nombreUsuario = teclado.next();
         System.out.println("Ingrese la contraseña del nuevo Admin");
         String contrasena = teclado.next();
         Usuario admin = new Admin(rut,nombre,nombreUsuario,contrasena);
-        String contenido = admin.toString();
 
+        String contenido = admin.toString();
         GestorArchivo gestorArchivo = new GestorArchivo();
-        gestorArchivo.nuevaLinea("ArchivosBD/admins.txt",contenido);
+        gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
         //gestorArchivo.crearArchivo("ArchivosBD/admins.txt",contenido);
     }
 
 
     public boolean validarRut(String rut) {
-        boolean validacion = false;
+        boolean validar = false;
         try {
             rut = rut.toUpperCase();
             rut = rut.replace(".", "");
             rut = rut.replace("-", "");
             int rutAux = Integer.parseInt(rut.substring(0, rut.length() - 1));
 
-            char dv = rut.charAt(rut.length() - 1);
+            char digitoVerificador = rut.charAt(rut.length() - 1);
 
             int m = 0, s = 1;
             for (; rutAux != 0; rutAux /= 10) {
                 s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
             }
-            if (dv == (char) (s != 0 ? s + 47 : 75)) {
-                validacion = true;
+            if (digitoVerificador == (char) (s != 0 ? s + 47 : 75)) {
+                validar = true;
             }
 
         } catch (Exception e) {
             System.out.println("Rut no valido " + e.getMessage());
         }
-        return validacion;
+        return validar;
+    }
+
+    public void cargarDatosProductos(String producto){
+        Path path = Paths.get("ArchivosBD/productos.txt");
+        try {
+            ArrayList<String> lineas = (ArrayList<String>) Files.readAllLines(path);
+
+            for (int i = 0; i < lineas.size(); i++) {
+                if (lineas.get(i).equals(producto)) {
+                    String nombre = lineas.get(i + 1).substring(8);
+                    String valor = lineas.get(i + 2).substring(7);
+                    int valorInt = Integer.parseInt(valor);
+                    String stock = lineas.get(i + 3).substring(7);
+                    int stockInt = Integer.parseInt(stock);
+                    String codigo = lineas.get(i + 4).substring(8);
+                    int codigoInt = Integer.parseInt(codigo);
+                    productos.add(new Fruta(nombre,valorInt,stockInt,codigoInt));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("ERROR");
+        }
     }
 
 

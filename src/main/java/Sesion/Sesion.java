@@ -1,5 +1,8 @@
 package Sesion;
 
+import BaseDeDatos.GestorBaseDatos;
+import Productos.Fruta;
+import Productos.Producto;
 import Usuarios.Admin;
 import Usuarios.Cajero;
 import Usuarios.Usuario;
@@ -13,10 +16,7 @@ import java.util.Scanner;
 public class Sesion {
 
     private ArrayList<Usuario> usuarios = new ArrayList<>();
-
-    public void anadirUsuario(Usuario u) {
-        usuarios.add(u);
-    }
+    private ArrayList<Producto> productos = new ArrayList<>();
 
     Scanner teclado = new Scanner(System.in);
 
@@ -24,8 +24,14 @@ public class Sesion {
     }
 
     public void iniciarSesion() {
-        cargarDatos();
-        System.out.println(usuarios.get(0));
+        GestorBaseDatos.cargarDatosUsuarios(usuarios);
+        System.out.println(usuarios.get(3).getContrasena());
+        GestorBaseDatos.cargarDatosProductos(productos,"Fruta");
+        GestorBaseDatos.cargarDatosProductos(productos,"Pan");
+        GestorBaseDatos.cargarDatosProductos(productos,"Snack");
+        GestorBaseDatos.cargarDatosProductos(productos,"Bebida");
+        GestorBaseDatos.cargarDatosProductos(productos,"Congelado");
+        GestorBaseDatos.cargarDatosProductos(productos,"Abarrote");
 
         System.out.println("\n-----Menu Iniciar Sesion-----");
         System.out.print("Ingrese su nombre de Usuario: ");
@@ -33,10 +39,12 @@ public class Sesion {
         System.out.print("Ingrese su contraseña: ");
         String contrasenaIngresada = teclado.next();
 
-
         for (int i = 0; i < usuarios.size(); i++) {
+
             if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)==true){
+
                 direccionarMenu(usuarios.get(i));
+
             }else {
                 iniciarSesion();
             }
@@ -62,8 +70,8 @@ public class Sesion {
         }
     }
 
-    public void cargarDatos(){
-        Path path = Paths.get("ArchivosBD/admins.txt");
+    public void cargarDatosUsuarios(){
+        Path path = Paths.get("ArchivosBD/usuarios.txt");
         try {
             ArrayList<String> lineas = (ArrayList<String>) Files.readAllLines(path);
 
@@ -82,9 +90,38 @@ public class Sesion {
                     usuarios.add(new Cajero(rut,nombre, nombreUsuario, contrasena));
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void cargarDatosProductos(){
+        Path path = Paths.get("ArchivosBD/productos.txt");
+        try {
+            ArrayList<String> lineas = (ArrayList<String>) Files.readAllLines(path);
+
+            for (int i = 0; i < lineas.size(); i++) {
+                if (lineas.get(i).equals("Fruta")) {
+                    String nombre = lineas.get(i + 1).substring(8);
+                    String valor = lineas.get(i + 2).substring(7);
+                    int valorInt = Integer.parseInt(valor);
+                    String stock = lineas.get(i + 3).substring(7);
+                    int stockInt = Integer.parseInt(stock);
+                    String codigo = lineas.get(i + 4).substring(8);
+                    int codigoInt = Integer.parseInt(codigo);
+                    productos.add(new Fruta(nombre,valorInt,stockInt,codigoInt));
+                } else if (lineas.get(i).equals("Pan")) {
+                    /*
+                    String nombre = lineas.get(i + 1).substring(8);
+                    String rut = lineas.get(i + 2).substring(5);
+                    String nombreUsuario = lineas.get(i + 3).substring(19);
+                    String contrasena = lineas.get(i + 4).substring(12);
+                    usuarios.add(new Cajero(rut,nombre, nombreUsuario, contrasena)); */
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("ERROR");
         }
     }
 }

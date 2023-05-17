@@ -1,21 +1,11 @@
 package Productos;
-
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public abstract class Producto {
-
     private String nombre;
     private int codigo;
-    private static int codigoInicial=1;
+    private static int codigoActual=1;
     private int valor;
     private String tipo;
     private int stock=0;
-
-    private static ArrayList<Producto> productos = new ArrayList<>();
-    Scanner teclado = new Scanner(System.in);
-
     public Producto() {
     }
 
@@ -24,7 +14,16 @@ public abstract class Producto {
         this.valor = valor;
         this.stock = stock;
         this.tipo = tipo;
-        this.codigo = codigoInicial;
+        this.codigo = codigoActual++;
     }
 
+    @Override
+    public String toString() {
+        return "\nFruta" +
+                "\nNombre: "+ nombre +
+                "\nValor: "+ valor +
+                "\nStock: "+ stock +
+                "\nCodigo: "+ codigo
+                ;
+    }
 }
