@@ -196,15 +196,13 @@ public class Admin extends Usuario {
         u.setContrasena(nuevaContra);
         System.out.println("Se modifico correctamente la contraseña");
     }
-
-
     public void mostrarUsuarios(){
         GestorArchivo gestorArchivo = new GestorArchivo();
         System.out.println(gestorArchivo.leerArchivo("ArchivosBD/usuarios.txt"));
 
     }
 
-    private void menuAdministrarProducto() { //ESTO NO VA EN SESION, VA EN ADMIN
+    private void menuAdministrarProducto() {
 
         int opcion = -1;
 
@@ -239,10 +237,20 @@ public class Admin extends Usuario {
 
     }
 
+    public boolean verificarCodigoDuplicado(int codigo){
+        for  (Producto p : productos) {
+            if (p.getCodigo()!=codigo) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void registrarNuevoProducto() {
         System.out.println(productos);
 
-        Scanner teclado = new Scanner(System.in);
+        Scanner registro = new Scanner(System.in);
+
         System.out.println("\nQue tipo de producto desea registrar: ");
         System.out.println("1.- Fruta");
         System.out.println("2.- Pan");
@@ -253,13 +261,17 @@ public class Admin extends Usuario {
         int opcion = teclado.nextInt();
 
         System.out.print("Ingrese el nombre del producto: ");
-        String nombre = teclado.next();
+        String nombre = registro.nextLine();
         System.out.print("Ingrese el valor que tendrá el producto: ");
         int valor = teclado.nextInt();
         System.out.print("Ingrese el stock inicial del producto: ");
         int stock = teclado.nextInt();
-        System.out.println("Ingrese el codigo del producto: ");
+        System.out.print("Ingrese el codigo del producto: ");
         int codigo = teclado.nextInt();
+
+
+
+
         do{
             try{
                 switch (opcion){
@@ -270,55 +282,59 @@ public class Admin extends Usuario {
                         System.out.println("Fruta registrada");
                         iniciarMenuPrincipalAdmin();
                         break;
-                    case 2:
-                        Producto pan = new Pan(nombre,valor,stock,codigo);
-                        String panString = pan.toString();
-                        gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",panString);
-                        System.out.println("Pan registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
-                    case 3:
-                        System.out.print("Ingrese el peso en litros de la bebida: ");
-                        double pesoLitros = teclado.nextDouble();
-                        Producto bebida = new Bebida(nombre,valor,stock,codigo,pesoLitros);
-                        String bebidaString = bebida.toString();
-                        gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",bebidaString);
-                        System.out.println("Bebida registrada");
-                        iniciarMenuPrincipalAdmin();
-                        break;
-                    case 4:
-                        Producto snack = new Snack(nombre,valor,stock,codigo);
-                        String snackString = snack.toString();
-                        gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",snackString);
-                        System.out.println("Snack registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
-                    case 5:
-                        Producto congelado = new Congelado(nombre,valor,stock,codigo);
-                        String congeladoString = congelado.toString();
-                        gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",congeladoString);
-                        System.out.println("Congelado registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
-                    case 6:
-                        Producto abarrote = new Abarrote(nombre,valor,stock,codigo);
-                        String abarroteString = abarrote.toString();
-                        gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",abarroteString);
-                        System.out.println("Abarrote registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        System.out.println("Error");
-                        break;
-                }
+                        case 2:
+                            Producto pan = new Pan(nombre,valor,stock,codigo);
+                            String panString = pan.toString();
+                            gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",panString);
+                            System.out.println("Pan registrado");
+                            iniciarMenuPrincipalAdmin();
+                            break;
+                            case 3:
+                                System.out.print("Ingrese el peso en litros de la bebida: ");
+                                double pesoLitros = teclado.nextDouble();
+                                Producto bebida = new Bebida(nombre,valor,stock,codigo,pesoLitros);
+                                String bebidaString = bebida.toString();
+                                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",bebidaString);
+                                System.out.println("Bebida registrada");
+                                iniciarMenuPrincipalAdmin();
+                                break;
+
+                                case 4:
+                                    Producto snack = new Snack(nombre,valor,stock,codigo);
+                                    String snackString = snack.toString();
+                                    gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",snackString);
+                                    System.out.println("Snack registrado");
+                                    iniciarMenuPrincipalAdmin();
+                                    break;
+                                case 5:
+                                    Producto congelado = new Congelado(nombre,valor,stock,codigo);
+                                    String congeladoString = congelado.toString();
+                                    gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",congeladoString);
+                                    System.out.println("Congelado registrado");
+                                    iniciarMenuPrincipalAdmin();
+                                    break;
+                                case 6:
+                                    Producto abarrote = new Abarrote(nombre,valor,stock,codigo);
+                                    String abarroteString = abarrote.toString();
+                                    gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",abarroteString);
+                                    System.out.println("Abarrote registrado");
+                                    iniciarMenuPrincipalAdmin();
+                                    break;
+                                case 0:
+                                    break;
+                                default:
+                                    System.out.println("Error");
+                                    break;
+                        }
             } catch (InputMismatchException e){
                 System.out.println("Ingrese una opcion valida");
                 teclado.next();
             }
         }while (opcion!=0);
     }
+
+
+
 
     public void registrarNuevoCajero(){
         Scanner registrarNombre = new Scanner(System.in);

@@ -60,3 +60,10 @@ Valor: 2400
 Stock: 20
 Codigo: 80
 Litros: 2.5
+
+Bebida
+Nombre: Coca Cola
+Valor: 2700
+Stock: 40
+Codigo: 99
+Litros: 2.0
