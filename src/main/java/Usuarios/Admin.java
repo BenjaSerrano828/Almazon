@@ -4,11 +4,6 @@ import BaseDeDatos.GestorArchivo;
 import BaseDeDatos.GestorBaseDatos;
 import Productos.*;
 import Sesion.Sesion;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -203,6 +198,13 @@ public class Admin extends Usuario {
     }
 
     private void menuAdministrarProducto() {
+        GestorBaseDatos.cargarDatosProductos(productos,"Fruta");
+        GestorBaseDatos.cargarDatosProductos(productos,"Pan");
+        GestorBaseDatos.cargarDatosProductos(productos,"Snack");
+        GestorBaseDatos.cargarDatosProductos(productos,"Bebida");
+        GestorBaseDatos.cargarDatosProductos(productos,"Congelado");
+        GestorBaseDatos.cargarDatosProductos(productos,"Abarrote");
+        System.out.println(productos.get(1));
 
         int opcion = -1;
 
@@ -239,11 +241,12 @@ public class Admin extends Usuario {
 
     public boolean verificarCodigoDuplicado(int codigo){
         for  (Producto p : productos) {
-            if (p.getCodigo()!=codigo) {
-                return false;
+            if (p.getCodigo()==codigo) {
+                System.out.println(p.getCodigo());
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void registrarNuevoProducto() {
@@ -269,8 +272,10 @@ public class Admin extends Usuario {
         System.out.print("Ingrese el codigo del producto: ");
         int codigo = teclado.nextInt();
 
-
-
+        while (verificarCodigoDuplicado(codigo)) {
+            System.out.print("El código ingresado ya existe. Por favor, ingrese otro código: ");
+            codigo = teclado.nextInt();
+        }
 
         do{
             try{
@@ -404,28 +409,6 @@ public class Admin extends Usuario {
             System.out.println("Rut no valido " + e.getMessage());
         }
         return validar;
-    }
-
-    public void cargarDatosProductos(String producto){
-        Path path = Paths.get("ArchivosBD/productos.txt");
-        try {
-            ArrayList<String> lineas = (ArrayList<String>) Files.readAllLines(path);
-
-            for (int i = 0; i < lineas.size(); i++) {
-                if (lineas.get(i).equals(producto)) {
-                    String nombre = lineas.get(i + 1).substring(8);
-                    String valor = lineas.get(i + 2).substring(7);
-                    int valorInt = Integer.parseInt(valor);
-                    String stock = lineas.get(i + 3).substring(7);
-                    int stockInt = Integer.parseInt(stock);
-                    String codigo = lineas.get(i + 4).substring(8);
-                    int codigoInt = Integer.parseInt(codigo);
-                    productos.add(new Fruta(nombre,valorInt,stockInt,codigoInt));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("ERROR");
-        }
     }
 
 
