@@ -1,14 +1,17 @@
 package Productos;
 
 public class Pan extends Producto {
+    private String peso;
     public Pan() {
     }
 
-    public Pan(String nombre, int valor,int stock) {
-        super(nombre, valor, stock, "Fruta");
+    public Pan(String nombre, int valor,int stock,int codigo) {
+        super(nombre, valor, stock,codigo);
     }
+
     @Override
     public String toString() {
-        return super.toString();
+        return "\nPan" +
+                super.toString();
     }
 }

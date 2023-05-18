@@ -2,25 +2,25 @@ package Productos;
 public abstract class Producto {
     private String nombre;
     private int codigo;
-    private static int codigoActual=1;
     private int valor;
-    private String tipo;
     private int stock=0;
     public Producto() {
     }
 
-    public Producto(String nombre, int valor,int stock, String tipo) {
+    public Producto(String nombre, int valor,int stock,int codigo) {
         this.nombre = nombre;
         this.valor = valor;
         this.stock = stock;
-        this.tipo = tipo;
-        this.codigo = codigoActual++;
+        this.codigo = codigo;
+    }
+
+    public int getCodigo() {
+        return codigo;
     }
 
     @Override
     public String toString() {
-        return "\nFruta" +
-                "\nNombre: "+ nombre +
+        return "\nNombre: "+ nombre +
                 "\nValor: "+ valor +
                 "\nStock: "+ stock +
                 "\nCodigo: "+ codigo

@@ -1,7 +1,6 @@
 package BaseDeDatos;
 
-import Productos.Fruta;
-import Productos.Producto;
+import Productos.*;
 import Usuarios.Admin;
 import Usuarios.Cajero;
 import Usuarios.Usuario;
@@ -58,7 +57,27 @@ public class GestorBaseDatos {
                     int stockInt = Integer.parseInt(stock);
                     String codigo = lineas.get(i + 4).substring(8);
                     int codigoInt = Integer.parseInt(codigo);
-                    productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
+                    /*
+                    switch (producto){
+                        case "Fruta":
+                            productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
+                        case "Abarrote":
+                    }*/
+                    if (producto.equals("Fruta")){
+                        productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
+                    }else if (producto.equals("Pan")){
+                        productos.add(new Pan(nombre, valorInt, stockInt, codigoInt));
+                    }else if (producto.equals("Abarrote")){
+                        productos.add(new Abarrote(nombre, valorInt, stockInt, codigoInt));
+                    }else if (producto.equals("Bebida")){
+                        String litros = lineas.get(i + 5).substring(8);
+                        double litrosDouble = Double.parseDouble(litros);
+                        productos.add(new Bebida(nombre, valorInt, stockInt, codigoInt,litrosDouble));
+                    }else if (producto.equals("Congelado")){
+                        productos.add(new Congelado(nombre, valorInt, stockInt, codigoInt));
+                    }else if (producto.equals("Snack")){
+                        productos.add(new Snack(nombre, valorInt, stockInt, codigoInt));
+                    }
                 }
             }
         } catch(IOException e){

@@ -25,7 +25,6 @@ public class Sesion {
 
     public void iniciarSesion() {
         GestorBaseDatos.cargarDatosUsuarios(usuarios);
-        System.out.println(usuarios.get(3).getContrasena());
         GestorBaseDatos.cargarDatosProductos(productos,"Fruta");
         GestorBaseDatos.cargarDatosProductos(productos,"Pan");
         GestorBaseDatos.cargarDatosProductos(productos,"Snack");

@@ -34,3 +34,29 @@ Nombre: Piña
 Valor: 580
 Stock: 30
 Codigo: 16
+
+Bebida
+Nombre: Fanta
+Valor: 2700
+Stock: 30
+Codigo: 7
+Litros: 2
+
+Pan
+Nombre: Marraqueta
+Valor: 500
+Stock: 45
+Codigo: 8
+
+Abarrote
+Nombre: Tallarines
+Valor: 790
+Stock: 46
+Codigo: 9
+
+Bebida
+Nombre: Pepsi
+Valor: 2400
+Stock: 20
+Codigo: 80
+Litros: 2.5

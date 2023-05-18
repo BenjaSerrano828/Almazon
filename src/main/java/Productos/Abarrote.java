@@ -1,14 +1,16 @@
 package Productos;
 
 public class Abarrote extends Producto {
+    private String marca;
     public Abarrote() {
     }
-
-    public Abarrote(String nombre, int valor,int stock) {
-        super(nombre, valor,stock, "Abarrote");
+    public Abarrote(String nombre, int valor,int stock,int codigo) {
+        super(nombre, valor,stock,codigo);
     }
+
     @Override
     public String toString() {
-        return super.toString();
+        return "\nAbarrote" +
+                super.toString();
     }
 }
