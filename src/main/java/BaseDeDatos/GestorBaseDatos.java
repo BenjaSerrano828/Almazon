@@ -84,5 +84,24 @@ public class GestorBaseDatos {
             System.out.println("ERROR");
         }
     }
+
+    public static int cargarCodigo() {
+        Path path = Paths.get("ArchivosBD/codigo.txt");
+        try {
+            ArrayList<String> lineas = (ArrayList<String>) Files.readAllLines(path);
+
+            for (int i = 0; i < lineas.size(); i++) {
+                if (lineas.get(i).equals("Codigo")) {
+                    String ultimoCodigo = lineas.get(i + 1).substring(8);
+                    int ultimoCodigoInt = Integer.parseInt(ultimoCodigo);
+                    return ultimoCodigoInt++;
+                }
+            }
+        } catch(IOException e){
+            System.out.println("ERROR");
+        }
+        return 0;
+    }
+
 }
 

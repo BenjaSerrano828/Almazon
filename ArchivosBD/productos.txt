@@ -21,19 +21,19 @@ Fruta
 Nombre: Uva
 Valor: 70
 Stock: 600
-Codigo: 1
+Codigo: 4
 
 Fruta
 Nombre: Platano
 Valor: 300
 Stock: 78
-Codigo: 9
+Codigo: 5
 
 Fruta
 Nombre: Piña
 Valor: 580
 Stock: 30
-Codigo: 16
+Codigo: 6
 
 Bebida
 Nombre: Fanta
@@ -58,12 +58,24 @@ Bebida
 Nombre: Pepsi
 Valor: 2400
 Stock: 20
-Codigo: 80
+Codigo: 10
 Litros: 2.5
 
 Bebida
 Nombre: Coca Cola
 Valor: 2700
 Stock: 40
-Codigo: 99
+Codigo: 11
 Litros: 2.0
+
+Fruta
+Nombre: Mandarina
+Valor: 40
+Stock: 10
+Codigo: 12
+
+Fruta
+Nombre: Tomate
+Valor: 500
+Stock: 15
+Codigo: 13

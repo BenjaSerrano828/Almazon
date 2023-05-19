@@ -10,7 +10,7 @@ Rut: 20.645.607-8
 Nombre de Usuario: SebaSTU
 Contraseña: sebastu12, 
 Admin
-Nombre: Benjamin Serrano
+Nombre: zoyk
 Rut: 20.587.734-7
 Nombre de Usuario: benja23
 Contraseña: benja2310, 
@@ -18,4 +18,9 @@ Cajero
 Nombre: Sebastian Torres
 Rut: 20.645.607-8
 Nombre de Usuario: SebaSTU12
-Contraseña: sebastu12]]
+Contraseña: sebastu12, 
+Cajero
+Nombre: Zoyk
+Rut: 20.587.734-7
+Nombre de Usuario: zoykel23
+Contraseña: zoykel]
