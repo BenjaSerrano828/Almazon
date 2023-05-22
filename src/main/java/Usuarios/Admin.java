@@ -1,5 +1,4 @@
 package Usuarios;
-
 import BaseDeDatos.GestorArchivo;
 import BaseDeDatos.GestorBaseDatos;
 import Productos.*;
@@ -24,7 +23,7 @@ public class Admin extends Usuario {
     }
 
     public void iniciarMenuPrincipalAdmin() {
-
+        GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
         int opcion = -1;
         do{
             try{
@@ -58,7 +57,6 @@ public class Admin extends Usuario {
 
 
     private void menuAdministrarUsuario() {
-
         int opcion = -1;
         do{
             try{
@@ -84,7 +82,7 @@ public class Admin extends Usuario {
                         buscarUsuarioAEditar();
                         break;
                     case 4:
-                        //Pendiente hasta la implementacion de BD
+                        buscarUsuarioAEliminar();
                         break;
                     case 0:
                         break;
@@ -99,17 +97,20 @@ public class Admin extends Usuario {
 
         }while(opcion!=0);
     }
-    public void buscarUsuarioAEditar() {
+
+    public void buscarUsuarioAEliminar() {
         mostrarUsuarios();
-        GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
+        System.out.print("Ingrese el rut del usuario a eliminar: ");
+        String rutIngresado = teclado.next();
+        eliminarUsurio(encontrarUsuarioPorRut(usuariosParaEditar,rutIngresado));
+    }
 
-        System.out.println(usuariosParaEditar.get(1));
-
+    public void buscarUsuarioAEditar() {
+        //GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
+        System.out.println(usuariosParaEditar);
         System.out.print("Ingrese el rut del usuario a editar: ");
         String rutIngresado = teclado.next();
-
-        editarUsuario(encontrarUsuarioPorRut(usuariosParaEditar,rutIngresado));
-
+        menuEditarUsuario(encontrarUsuarioPorRut(usuariosParaEditar,rutIngresado));
     }
 
     public Usuario encontrarUsuarioPorRut(ArrayList<Usuario> usuarios,String rut){
@@ -121,7 +122,27 @@ public class Admin extends Usuario {
         return null;
     }
 
-    public void editarUsuario(Usuario u){
+    public void eliminarUsurio(Usuario u){
+        System.out.println(u);
+        System.out.println("Estas seguro si deseas eliminar este usuario?");
+        System.out.println("1.- Si\n2.- No");
+        int opcion = teclado.nextInt();
+        try{
+            if (opcion==1){
+                usuariosParaEditar.remove(u);
+                System.out.println(usuariosParaEditar);
+                guardarCambios(usuariosParaEditar);
+            }else if (opcion==2){
+                menuAdministrarUsuario();
+            }else {
+                System.out.println("Ingrese una opcion valida");
+            }
+        }catch (InputMismatchException e){
+            System.out.println("Por favor ingrese un numero");
+        }
+    }
+
+    public void menuEditarUsuario(Usuario u){
         int opcion = -1;
         do {
             try{
@@ -129,7 +150,7 @@ public class Admin extends Usuario {
                 System.out.println("1.- Nombre");
                 System.out.println("2.- Nombre de Usuario");
                 System.out.println("3.- Contraseña");
-                System.out.println("4.- Guardar");
+                //System.out.println("4.- Guardar");
                 System.out.println("0.- Atras");
 
                 opcion = teclado.nextInt();
@@ -144,8 +165,6 @@ public class Admin extends Usuario {
                     case 3:
                         editarContrasena(u);
                         break;
-                    case 4:
-                        guardarCambios();
                     case 0:
                         break;
                 }
@@ -158,12 +177,38 @@ public class Admin extends Usuario {
 
     }
 
-    public void guardarCambios() {
-
+    public void guardarCambios(ArrayList<Usuario> usuarios) {
         GestorArchivo gestorArchivo = new GestorArchivo();
-        String contenido = usuariosParaEditar.toString();
-        gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt",contenido);
+        gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt","");
+        mostrarUsuarios();
+
+        for (int i = 0; i < usuarios.size(); i++) {
+
+            Usuario Admin = new Admin();
+            Usuario Cajero = new Cajero();
+
+            if (usuarios.get(i).getClass()==Admin.getClass()){
+                String nombre = usuarios.get(i).getNombre();
+                String rut = usuarios.get(i).getRut();
+                String nombreUsuario = usuarios.get(i).getNombreUsuario();
+                String contrasena = usuarios.get(i).getContrasena();
+                Usuario admin = new Admin(rut, nombre, nombreUsuario, contrasena);
+                String contenidoUsuario = admin.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenidoUsuario);
+            }else if (usuarios.get(i).getClass()==Cajero.getClass()){
+                String nombre = usuarios.get(i).getNombre();
+                String rut = usuarios.get(i).getRut();
+                String nombreUsuario = usuarios.get(i).getNombreUsuario();
+                String contrasena = usuarios.get(i).getContrasena();
+                Usuario cajero = new Cajero(rut, nombre, nombreUsuario, contrasena);
+                String contenidoUsuario = cajero.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenidoUsuario);
+            }
+        }
+        //gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt",contenido);
     }
+
+
 
     public void editarNombre(Usuario u){
         Scanner registrarNombre = new Scanner(System.in);
@@ -172,6 +217,7 @@ public class Admin extends Usuario {
         String nuevoNombre = registrarNombre.nextLine();
         u.setNombre(nuevoNombre);
         System.out.println("Se modifico correctamente el nombre");
+        guardarCambios(usuariosParaEditar);
 
     }
     public void editarNombreUsuario(Usuario u){
@@ -182,6 +228,8 @@ public class Admin extends Usuario {
         String nuevoNombreUsuario = registrarNombreUsuario.next();
         u.setNombreUsuario(nuevoNombreUsuario);
         System.out.println("Se modifico correctamente el nombre de usuario");
+        guardarCambios(usuariosParaEditar);
+
     }
     public void editarContrasena(Usuario u){
         Scanner registrarContra = new Scanner(System.in);
@@ -191,6 +239,7 @@ public class Admin extends Usuario {
         String nuevaContra = registrarContra.next();
         u.setContrasena(nuevaContra);
         System.out.println("Se modifico correctamente la contraseña");
+        guardarCambios(usuariosParaEditar);
     }
     public void mostrarUsuarios(){
         GestorArchivo gestorArchivo = new GestorArchivo();
@@ -240,17 +289,8 @@ public class Admin extends Usuario {
         }while(opcion!=0);
 
     }
-    /*
-    public boolean verificarCodigoDuplicado(int codigo){
-        for  (Producto p : productos) {
-            if (p.getCodigo()==codigo) {
-                System.out.println(p.getCodigo());
-                return true;
-            }
-        }
-        return false;
-    }*/
     public void registrarNuevoProducto() {
+        Scanner registroMarca = new Scanner(System.in);
         System.out.println(codigoActual);
 
         System.out.println(productos);
@@ -275,9 +315,9 @@ public class Admin extends Usuario {
 
         System.out.print("Ingrese el nombre del producto: ");
         String nombre = registro.nextLine();
-        System.out.print("Ingrese el valor que tendrá el producto: ");
+        System.out.print("Valor por peso (unidad con peso definido).\nIngrese el valor que tendrá el producto: ");
         int valor = teclado.nextInt();
-        System.out.print("Ingrese el stock inicial del producto: ");
+        System.out.print("Stock por unidad o peso.\nIngrese el stock inicial del producto: ");
         int stock = teclado.nextInt();
         String codigoString = "Codigo\nCodigo: " + codigo;
 
@@ -311,7 +351,9 @@ public class Admin extends Usuario {
                         iniciarMenuPrincipalAdmin();
                         break;
                     case 4:
-                        Producto snack = new Snack(nombre,valor,stock,codigo);
+                        System.out.print("Ingrese la marca del Snack:");
+                        String marcaSnack = registroMarca.nextLine();
+                        Producto snack = new Snack(nombre,valor,stock,marcaSnack,codigo);
                         String snackString = snack.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",snackString);
                         gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
@@ -319,7 +361,9 @@ public class Admin extends Usuario {
                         iniciarMenuPrincipalAdmin();
                         break;
                     case 5:
-                        Producto congelado = new Congelado(nombre,valor,stock,codigo);
+                        System.out.print("Ingrese la marca del Congelado");
+                        String marcaCongelado = registroMarca.nextLine();
+                        Producto congelado = new Congelado(nombre,valor,stock,marcaCongelado,codigo);
                         String congeladoString = congelado.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",congeladoString);
                         gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
@@ -327,7 +371,9 @@ public class Admin extends Usuario {
                         iniciarMenuPrincipalAdmin();
                         break;
                     case 6:
-                        Producto abarrote = new Abarrote(nombre,valor,stock,codigo);
+                        System.out.print("Ingrese la marca del Abarrote");
+                        String marcaAbarrote = registroMarca.nextLine();
+                        Producto abarrote = new Abarrote(nombre,valor,stock,marcaAbarrote,codigo);
                         String abarroteString = abarrote.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",abarroteString);
                         gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
@@ -362,6 +408,7 @@ public class Admin extends Usuario {
         System.out.println("Ingrese la contraseña del nuevo Cajero");
         String contrasena = teclado.next();
         Usuario cajero = new Cajero(rut,nombre,nombreUsuario,contrasena);
+        usuariosParaEditar.add(cajero);
 
         String contenido = cajero.toString();
         GestorArchivo gestorArchivo = new GestorArchivo();
@@ -384,6 +431,7 @@ public class Admin extends Usuario {
         System.out.println("Ingrese la contraseña del nuevo Admin");
         String contrasena = teclado.next();
         Usuario admin = new Admin(rut,nombre,nombreUsuario,contrasena);
+        usuariosParaEditar.add(admin);
 
         String contenido = admin.toString();
         GestorArchivo gestorArchivo = new GestorArchivo();

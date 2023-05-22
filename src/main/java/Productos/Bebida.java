@@ -10,6 +10,10 @@ public class Bebida extends Producto {
         this.pesoLitros=pesoLitros;
     }
 
+    public double getPesoLitros() {
+        return pesoLitros;
+    }
+
     @Override
     public String toString() {
         return "\nBebida" +

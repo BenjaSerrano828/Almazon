@@ -1,7 +1,6 @@
 package Productos;
 
 public class Pan extends Producto {
-    private String peso;
     public Pan() {
     }
 

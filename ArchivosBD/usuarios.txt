@@ -1,26 +1,17 @@
-[
 Admin
-Nombre: Seba Torres
-Rut: RUT ADMIN
+Nombre: ADMIN SUPREMO
+Rut: aaa
 Nombre de Usuario: admin
-Contraseña: admin123, 
+Contraseña: admin123
+
 Admin
-Nombre: Seba Torres
-Rut: 20.645.607-8
-Nombre de Usuario: SebaSTU
-Contraseña: sebastu12, 
-Admin
-Nombre: zoyk
+Nombre: Benja
 Rut: 20.587.734-7
-Nombre de Usuario: benja23
-Contraseña: benja2310, 
+Nombre de Usuario: zoyk
+Contraseña: zoyk
+
 Cajero
-Nombre: Sebastian Torres
+Nombre: Seba
 Rut: 20.645.607-8
-Nombre de Usuario: SebaSTU12
-Contraseña: sebastu12, 
-Cajero
-Nombre: Zoyk
-Rut: 20.587.734-7
-Nombre de Usuario: zoykel23
-Contraseña: zoykel]
+Nombre de Usuario: seba
+Contraseña: seba

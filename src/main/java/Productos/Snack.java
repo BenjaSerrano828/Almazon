@@ -7,14 +7,19 @@ public class Snack extends Producto {
 
     }
 
-    public Snack(String nombre, int valor,int stock, int codigo) {
+    public Snack(String nombre, int valor,int stock, String marca, int codigo) {
         super(nombre, valor,stock,codigo);
+        this.marca = marca;
     }
 
+    public String getMarca() {
+        return marca;
+    }
 
     @Override
     public String toString() {
         return "\nSnack" +
-                super.toString();
+                super.toString()+
+                "\nMarca: "+marca;
     }
 }

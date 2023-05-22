@@ -4,9 +4,15 @@ public class Abarrote extends Producto {
     private String marca;
     public Abarrote() {
     }
-    public Abarrote(String nombre, int valor,int stock,int codigo) {
+    public Abarrote(String nombre, int valor,int stock,String marca, int codigo) {
         super(nombre, valor,stock,codigo);
+        this.marca = marca;
     }
+
+    public String getMarca() {
+        return marca;
+    }
+
 
     @Override
     public String toString() {

@@ -68,7 +68,6 @@ public class GestorArchivo {
         } catch (IOException e) {
             System.out.println("El archivo no pudo ser copiado");
         }
-
     }
 
     //nuevaLinea

@@ -53,6 +53,7 @@ Nombre: Tallarines
 Valor: 790
 Stock: 46
 Codigo: 9
+Marca: Carozzi
 
 Bebida
 Nombre: Pepsi
