@@ -1,10 +1,8 @@
 package BaseDeDatos;
-
 import Productos.*;
 import Usuarios.Admin;
 import Usuarios.Cajero;
 import Usuarios.Usuario;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,7 +42,6 @@ public class GestorBaseDatos {
         }
 
     }
-
     public static void cargarDatosProductos(ArrayList<Producto> productos, String producto) {
         Path path = Paths.get("ArchivosBD/productos.txt");
         try {
@@ -60,13 +57,30 @@ public class GestorBaseDatos {
                     String codigo = lineas.get(i + 4).substring(8);
                     int codigoInt = Integer.parseInt(codigo);
 
+                    /*
+                    switch (producto){
+                        case "Abarrote":
+                            String marcaAbarrote = lineas.get(i + 5).substring(7);
+                            productos.add(new Abarrote(nombre, valorInt, stockInt, codigoInt,marcaAbarrote));
+                        case "Bebida":
+                            String litros = lineas.get(i + 5).substring(8);
+                            double litrosDouble = Double.parseDouble(litros);
+                        case "Congelado":
+                            String marcaCongelado = lineas.get(i + 5).substring(7);
+                            productos.add(new Congelado(nombre, valorInt, stockInt,marcaCongelado, codigoInt));
+                        case "Fruta":
+                            productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
+                        case "Pan":
+                            productos.add(new Pan(nombre, valorInt, stockInt, codigoInt));
+                        case "Snack":
+                            String marcaSnack = lineas.get(i + 5).substring(7);
+                            productos.add(new Snack(nombre, valorInt, stockInt ,marcaSnack, codigoInt));
+                    }
+
+                     */
+
                     if (producto.equals("Fruta")){
                         productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
-                    }else if (producto.equals("Pan")){
-                        productos.add(new Pan(nombre, valorInt, stockInt, codigoInt));
-                    }else if (producto.equals("Abarrote")){
-                        String marcaAbarrote = lineas.get(i + 5).substring(7);
-                        productos.add(new Abarrote(nombre, valorInt, stockInt,marcaAbarrote, codigoInt));
                     }else if (producto.equals("Bebida")){
                         String litros = lineas.get(i + 5).substring(8);
                         double litrosDouble = Double.parseDouble(litros);
@@ -74,16 +88,21 @@ public class GestorBaseDatos {
                     }else if (producto.equals("Congelado")){
                         String marcaCongelado = lineas.get(i + 5).substring(7);
                         productos.add(new Congelado(nombre, valorInt, stockInt,marcaCongelado, codigoInt));
+                    }else if (producto.equals("Abarrote")){
+                        String marcaAbarrote = lineas.get(i + 5).substring(7);
+                        productos.add(new Abarrote(nombre, valorInt, stockInt, codigoInt,marcaAbarrote));
+                    }else if (producto.equals("Pan")){
+                        productos.add(new Pan(nombre, valorInt, stockInt, codigoInt));
                     }else if (producto.equals("Snack")){
                         String marcaSnack = lineas.get(i + 5).substring(7);
                         productos.add(new Snack(nombre, valorInt, stockInt ,marcaSnack, codigoInt));
                     }
+
                 }
             }
         } catch(IOException e){
         }
     }
-
     public static int cargarCodigo() {
         Path path = Paths.get("ArchivosBD/codigo.txt");
         try {
@@ -101,52 +120,73 @@ public class GestorBaseDatos {
         }
         return 0;
     }
-
-
-    public static void guardarDatosUsuarios(ArrayList<Usuario> usuarios) {
+    public static void guardarCambiosUsuarios(ArrayList<Usuario> usuarios) {
         GestorArchivo gestorArchivo = new GestorArchivo();
-        //"ArchivosBD/usuarios.txt"
-
+        gestorArchivo.escribirArchivo("ArchivosBD/usuarios.txt","");
 
         for (int i = 0; i < usuarios.size(); i++) {
 
-            if (usuarios.get(i).getClass().equals("Admin")) {
+            Usuario Admin = new Admin();
+            Usuario Cajero = new Cajero();
+
+            if (usuarios.get(i).getClass()==Admin.getClass()){
                 String nombre = usuarios.get(i).getNombre();
                 String rut = usuarios.get(i).getRut();
                 String nombreUsuario = usuarios.get(i).getNombreUsuario();
                 String contrasena = usuarios.get(i).getContrasena();
                 Usuario admin = new Admin(rut, nombre, nombreUsuario, contrasena);
-                String contenido = admin.toString();
-                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
-            } else if (usuarios.get(i).getClass().equals("Cajero")) {
+                String contenidoUsuario = admin.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenidoUsuario);
+            }else if (usuarios.get(i).getClass()==Cajero.getClass()){
                 String nombre = usuarios.get(i).getNombre();
                 String rut = usuarios.get(i).getRut();
                 String nombreUsuario = usuarios.get(i).getNombreUsuario();
                 String contrasena = usuarios.get(i).getContrasena();
                 Usuario cajero = new Cajero(rut, nombre, nombreUsuario, contrasena);
-                String contenido = cajero.toString();
-                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
+                String contenidoUsuario = cajero.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenidoUsuario);
             }
         }
-        /*
-        for (Usuario usuario : usuarios){
-            String nombre = usuario.getNombre();
-            String nombreUsuario = usuario.getNombreUsuario();
-            String rut = usuario.getRut();
-            String contraseña = usuario.getContrasena();
-            usuario.getClass();
-            if (usuario.getClass().equals("Admin")){
-                Usuario admin = new Admin(rut,nombre,nombreUsuario,contraseña);
-                String contenido = admin.toString();
-                gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt",contenido);
-            }else if (usuario.getClass().equals("Cajero")){
-                Usuario cajero = new Cajero(rut,nombre,nombreUsuario,contraseña);
-                String contenido = cajero.toString();
-                gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt",contenido);
+    }
+    public static void guardarCambiosProductos(ArrayList<Producto> productos) {
+        GestorArchivo gestorArchivo = new GestorArchivo();
+        gestorArchivo.escribirArchivo("ArchivosBD/productos.txt","");
+        for (Producto p : productos) {
+            String nombre = p.getNombre();
+            int valor = p.getValor();
+            int stock = p.getStock();
+            int codigo = p.getCodigo();
+            String contenido;
+            if (p instanceof Fruta) {
+                Producto fruta = new Fruta(nombre,valor,stock,codigo);
+                contenido = fruta.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
+            }else if (p instanceof Bebida){
+                double litros = ((Bebida) p).getPesoLitros();
+                Producto bebida = new Bebida(nombre,valor,stock,codigo,litros);
+                contenido = bebida.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
+            }else if (p instanceof Congelado){
+                String marca = ((Congelado) p).getMarca();
+                Producto congelado = new Congelado(nombre,valor,stock,marca,codigo);
+                contenido = congelado.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
+            }else if (p instanceof Abarrote){
+                String marca = ((Abarrote) p).getMarca();
+                Producto abarrote = new Abarrote(nombre,valor,stock,codigo,marca);
+                contenido = abarrote.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
+            }else if (p instanceof Pan){
+                Producto pan = new Pan(nombre,valor,stock,codigo);
+                contenido = pan.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
+            }else if (p instanceof Snack){
+                String marca = ((Snack) p).getMarca();
+                Producto snack = new Snack(nombre,valor,stock,marca,codigo);
+                contenido = snack.toString();
+                gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
             }
-            System.out.println(usuarios);
-        }*/
-
+        }
     }
 
 }

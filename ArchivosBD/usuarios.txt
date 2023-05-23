@@ -1,3 +1,5 @@
+
+
 Admin
 Nombre: ADMIN SUPREMO
 Rut: aaa
@@ -11,7 +13,7 @@ Nombre de Usuario: zoyk
 Contraseña: zoyk
 
 Cajero
-Nombre: Seba
+Nombre: Seba Torres
 Rut: 20.645.607-8
 Nombre de Usuario: seba
 Contraseña: seba

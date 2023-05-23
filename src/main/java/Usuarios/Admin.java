@@ -14,15 +14,13 @@ public class Admin extends Usuario {
     private ArrayList<Usuario> usuariosParaEditar = new ArrayList<>();
     GestorArchivo gestorArchivo = new GestorArchivo();
     public int codigoActual;
-
-
     public Admin() {
     }
     public Admin(String rut, String nombre, String nombreUsuario, String contrasena) {
         super(rut, nombre, nombreUsuario, contrasena);
     }
-
     public void iniciarMenuPrincipalAdmin() {
+        usuariosParaEditar.clear();
         GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
         int opcion = -1;
         do{
@@ -43,7 +41,7 @@ public class Admin extends Usuario {
                         break;
                     case 3:
                         Sesion sesionNueva = new Sesion();
-                        sesionNueva.iniciarSesion();
+                        sesionNueva.primerInicioSesion();
                         break;
                     default:
                         System.out.println("Ingrese una opcion valida");
@@ -131,7 +129,7 @@ public class Admin extends Usuario {
             if (opcion==1){
                 usuariosParaEditar.remove(u);
                 System.out.println(usuariosParaEditar);
-                guardarCambios(usuariosParaEditar);
+                GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
             }else if (opcion==2){
                 menuAdministrarUsuario();
             }else {
@@ -177,39 +175,6 @@ public class Admin extends Usuario {
 
     }
 
-    public void guardarCambios(ArrayList<Usuario> usuarios) {
-        GestorArchivo gestorArchivo = new GestorArchivo();
-        gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt","");
-        mostrarUsuarios();
-
-        for (int i = 0; i < usuarios.size(); i++) {
-
-            Usuario Admin = new Admin();
-            Usuario Cajero = new Cajero();
-
-            if (usuarios.get(i).getClass()==Admin.getClass()){
-                String nombre = usuarios.get(i).getNombre();
-                String rut = usuarios.get(i).getRut();
-                String nombreUsuario = usuarios.get(i).getNombreUsuario();
-                String contrasena = usuarios.get(i).getContrasena();
-                Usuario admin = new Admin(rut, nombre, nombreUsuario, contrasena);
-                String contenidoUsuario = admin.toString();
-                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenidoUsuario);
-            }else if (usuarios.get(i).getClass()==Cajero.getClass()){
-                String nombre = usuarios.get(i).getNombre();
-                String rut = usuarios.get(i).getRut();
-                String nombreUsuario = usuarios.get(i).getNombreUsuario();
-                String contrasena = usuarios.get(i).getContrasena();
-                Usuario cajero = new Cajero(rut, nombre, nombreUsuario, contrasena);
-                String contenidoUsuario = cajero.toString();
-                gestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenidoUsuario);
-            }
-        }
-        //gestorArchivo.crearArchivo("ArchivosBD/usuarios.txt",contenido);
-    }
-
-
-
     public void editarNombre(Usuario u){
         Scanner registrarNombre = new Scanner(System.in);
         System.out.println("Nombre actual: "+ u.getNombre());
@@ -217,7 +182,7 @@ public class Admin extends Usuario {
         String nuevoNombre = registrarNombre.nextLine();
         u.setNombre(nuevoNombre);
         System.out.println("Se modifico correctamente el nombre");
-        guardarCambios(usuariosParaEditar);
+        GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
 
     }
     public void editarNombreUsuario(Usuario u){
@@ -228,7 +193,7 @@ public class Admin extends Usuario {
         String nuevoNombreUsuario = registrarNombreUsuario.next();
         u.setNombreUsuario(nuevoNombreUsuario);
         System.out.println("Se modifico correctamente el nombre de usuario");
-        guardarCambios(usuariosParaEditar);
+        GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
 
     }
     public void editarContrasena(Usuario u){
@@ -239,7 +204,7 @@ public class Admin extends Usuario {
         String nuevaContra = registrarContra.next();
         u.setContrasena(nuevaContra);
         System.out.println("Se modifico correctamente la contraseña");
-        guardarCambios(usuariosParaEditar);
+        GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
     }
     public void mostrarUsuarios(){
         GestorArchivo gestorArchivo = new GestorArchivo();
@@ -328,7 +293,7 @@ public class Admin extends Usuario {
                         Producto fruta = new Fruta(nombre,valor,stock,codigo);
                         String frutaString = fruta.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",frutaString);
-                        gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
+                        gestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",codigoString);
                         System.out.println("Fruta registrada");
                         iniciarMenuPrincipalAdmin();
                         break;
@@ -336,7 +301,7 @@ public class Admin extends Usuario {
                         Producto pan = new Pan(nombre,valor,stock,codigo);
                         String panString = pan.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",panString);
-                        gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
+                        gestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",codigoString);
                         System.out.println("Pan registrado");
                         iniciarMenuPrincipalAdmin();
                         break;
@@ -346,7 +311,7 @@ public class Admin extends Usuario {
                         Producto bebida = new Bebida(nombre,valor,stock,codigo,pesoLitros);
                         String bebidaString = bebida.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",bebidaString);
-                        gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
+                        gestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",codigoString);
                         System.out.println("Bebida registrada");
                         iniciarMenuPrincipalAdmin();
                         break;
@@ -356,7 +321,7 @@ public class Admin extends Usuario {
                         Producto snack = new Snack(nombre,valor,stock,marcaSnack,codigo);
                         String snackString = snack.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",snackString);
-                        gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
+                        gestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",codigoString);
                         System.out.println("Snack registrado");
                         iniciarMenuPrincipalAdmin();
                         break;
@@ -366,17 +331,17 @@ public class Admin extends Usuario {
                         Producto congelado = new Congelado(nombre,valor,stock,marcaCongelado,codigo);
                         String congeladoString = congelado.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",congeladoString);
-                        gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
+                        gestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",codigoString);
                         System.out.println("Congelado registrado");
                         iniciarMenuPrincipalAdmin();
                         break;
                     case 6:
                         System.out.print("Ingrese la marca del Abarrote");
                         String marcaAbarrote = registroMarca.nextLine();
-                        Producto abarrote = new Abarrote(nombre,valor,stock,marcaAbarrote,codigo);
+                        Producto abarrote = new Abarrote(nombre,valor,stock,codigo,marcaAbarrote);
                         String abarroteString = abarrote.toString();
                         gestorArchivo.nuevaLinea("ArchivosBD/productos.txt",abarroteString);
-                        gestorArchivo.crearArchivo("ArchivosBD/codigo.txt",codigoString);
+                        gestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",codigoString);
                         System.out.println("Abarrote registrado");
                         iniciarMenuPrincipalAdmin();
                         break;

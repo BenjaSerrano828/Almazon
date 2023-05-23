@@ -11,7 +11,7 @@ public class Main {
         //c.iniciarMenuPrincipalCajero();
         Sesion sesion = new Sesion();
         //sesion.iniciarSesion();
-        sesion.primerInicio();
+        sesion.primerInicioSesion();
 
 
     }

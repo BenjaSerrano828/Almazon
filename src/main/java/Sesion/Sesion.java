@@ -10,11 +10,12 @@ public class Sesion {
     Scanner teclado = new Scanner(System.in);
     public Sesion() {
     }
-    public void primerInicio(){
+    public void primerInicioSesion(){
         GestorBaseDatos.cargarDatosUsuarios(usuarios);
         iniciarSesion();
     }
     public void iniciarSesion() {
+        System.out.println(usuarios);
         System.out.println("\n-----Menu Iniciar Sesion-----");
         System.out.print("Ingrese su nombre de Usuario: ");
         String nombreUsuarioIngresado = teclado.next();
