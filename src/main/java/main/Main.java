@@ -7,11 +7,11 @@ import Usuarios.Cajero;
 public class Main {
     public static void main(String[] args) {
 
-        Cajero c = new Cajero();
-        c.iniciarMenuPrincipalCajero();
-
+        //Cajero c = new Cajero();
+        //c.iniciarMenuPrincipalCajero();
         Sesion sesion = new Sesion();
-        sesion.iniciarSesion();
+        //sesion.iniciarSesion();
+        sesion.primerInicio();
 
 
     }

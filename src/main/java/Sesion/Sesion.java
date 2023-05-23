@@ -1,44 +1,41 @@
 package Sesion;
-
 import BaseDeDatos.GestorBaseDatos;
-import Productos.Producto;
 import Usuarios.Admin;
 import Usuarios.Cajero;
 import Usuarios.Usuario;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Sesion {
-
     private ArrayList<Usuario> usuarios = new ArrayList<>();
-
     Scanner teclado = new Scanner(System.in);
-
     public Sesion() {
     }
-
-
-    public void iniciarSesion() {
+    public void primerInicio(){
         GestorBaseDatos.cargarDatosUsuarios(usuarios);
-        System.out.println(usuarios);
+        iniciarSesion();
+    }
+    public void iniciarSesion() {
         System.out.println("\n-----Menu Iniciar Sesion-----");
         System.out.print("Ingrese su nombre de Usuario: ");
         String nombreUsuarioIngresado = teclado.next();
         System.out.print("Ingrese su contraseña: ");
         String contrasenaIngresada = teclado.next();
-
-        for (int i = 0; i < usuarios.size(); i++) {
-
-            if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)==true){
-
-                direccionarMenu(usuarios.get(i));
-
-            }else {
-                iniciarSesion();
-            }
+        if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)){
+            Usuario usuarioEncontrado = buscarUsuario(usuarios, nombreUsuarioIngresado);
+            direccionarMenu(usuarioEncontrado);
+        }else{
+            iniciarSesion();
         }
     }
-    public boolean validarSesion(ArrayList<Usuario> usuarios,String nombreUsuario,String contrasena){
+    public Usuario buscarUsuario(ArrayList<Usuario> usuarios, String nombreUsuario) {
+        for (Usuario u : usuarios) {
+            if (u.getNombreUsuario().equals(nombreUsuario)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    public boolean validarSesion(ArrayList<Usuario> usuarios, String nombreUsuario ,String contrasena){
         for  (Usuario u: usuarios) {
             if (u.getNombreUsuario().equals(nombreUsuario)
                     && u.getContrasena().equals(contrasena)) {
@@ -47,15 +44,11 @@ public class Sesion {
         }
         return false;
     }
-
-
     public void direccionarMenu(Usuario u) {
-
-        if(u.getClass() == Admin.class){
+        if(u instanceof Admin){
             ((Admin) u).iniciarMenuPrincipalAdmin();
-        }else{
+        }else if(u instanceof Cajero){
             ((Cajero) u).iniciarMenuPrincipalCajero();
         }
     }
-
 }

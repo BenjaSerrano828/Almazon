@@ -1,22 +1,16 @@
 package Usuarios;
-
-
 import BaseDeDatos.GestorArchivo;
 import BaseDeDatos.GestorBaseDatos;
 import Productos.*;
-
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Cajero extends Usuario {
 
     Scanner teclado = new Scanner(System.in);
-
     ArrayList<Producto> productosParaEditar = new ArrayList<>();
     public Cajero(String rut, String nombre, String nombreUsuario, String contrasena) {
         super(rut, nombre, nombreUsuario, contrasena);
     }
-
     public Cajero() {
     }
     public void iniciarMenuPrincipalCajero() {
@@ -32,14 +26,12 @@ public class Cajero extends Usuario {
         realizarVenta();
 
     }
-
     public void realizarVenta(){
         System.out.println(productosParaEditar);
         System.out.print("Ingrese el codigo del producto: ");
         int codigo = teclado.nextInt();
         venderProducto(encontrarProductoPorCodigo(productosParaEditar,codigo));
     }
-
     public void venderProducto(Producto p){
         System.out.print("Ingrese la cantidad a vender: ");
         int cantidadVendida = teclado.nextInt();
@@ -47,12 +39,10 @@ public class Cajero extends Usuario {
         int stockFinal = stockActual - cantidadVendida;
         p.setStock(stockFinal);
         System.out.println("Producto vendido");
+        guardarCambiosEditar(productosParaEditar);
         iniciarMenuPrincipalCajero();
 
     }
-
-
-
     public Producto encontrarProductoPorCodigo(ArrayList<Producto> productos,int codigo){
         for  (Producto p : productos) {
             if (p.getCodigo()==codigo) {
@@ -61,7 +51,6 @@ public class Cajero extends Usuario {
         }
         return null;
     }
-
     public void guardarCambiosEditar(ArrayList<Producto> productos) {
         GestorArchivo gestorArchivo = new GestorArchivo();
         gestorArchivo.crearArchivo("ArchivosBD/productos.txt","");
