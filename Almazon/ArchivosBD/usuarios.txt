@@ -1,0 +1,25 @@
+
+
+Admin
+Nombre: ADMIN SUPREMO
+Rut: aaa
+Nombre de Usuario: admin
+Contraseña: admin123
+
+Admin
+Nombre: Benja
+Rut: 20.587.734-7
+Nombre de Usuario: zoyk
+Contraseña: zoyk
+
+Cajero
+Nombre: Seba Torres
+Rut: 20.645.607-8
+Nombre de Usuario: seba
+Contraseña: seba
+
+Cajero
+Nombre: Benjamin Serrano
+Rut: 20.587.734-7
+Nombre de Usuario: benja
+Contraseña: benja

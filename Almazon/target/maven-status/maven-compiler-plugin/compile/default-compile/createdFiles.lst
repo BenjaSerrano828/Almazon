@@ -1,0 +1,15 @@
+Productos\Congelado.class
+Productos\Bebida.class
+Boleta.class
+Productos\Snack.class
+Productos\Fruta.class
+Productos\Producto.class
+BaseDeDatos\GestorArchivo.class
+Sesion\Sesion.class
+BaseDeDatos\Boleta.class
+Productos\Pan.class
+Usuarios\Admin.class
+Main.class
+Usuarios\Cajero.class
+Productos\Abarrote.class
+Usuarios\Usuario.class
