@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Cajero extends Usuario {
-
     Scanner teclado = new Scanner(System.in);
     ArrayList<Producto> productosParaEditar = new ArrayList<>();
     public Cajero(String rut, String nombre, String nombreUsuario, String contrasena) {

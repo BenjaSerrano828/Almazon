@@ -36,11 +36,9 @@ public class GestorBaseDatos {
                     usuarios.add(cajero);
                 }
             }
-
         } catch (IOException e) {
             System.out.println("ERROR");
         }
-
     }
     public static void cargarDatosProductos(ArrayList<Producto> productos, String producto) {
         Path path = Paths.get("ArchivosBD/productos.txt");
@@ -56,28 +54,6 @@ public class GestorBaseDatos {
                     int stockInt = Integer.parseInt(stock);
                     String codigo = lineas.get(i + 4).substring(8);
                     int codigoInt = Integer.parseInt(codigo);
-
-                    /*
-                    switch (producto){
-                        case "Abarrote":
-                            String marcaAbarrote = lineas.get(i + 5).substring(7);
-                            productos.add(new Abarrote(nombre, valorInt, stockInt, codigoInt,marcaAbarrote));
-                        case "Bebida":
-                            String litros = lineas.get(i + 5).substring(8);
-                            double litrosDouble = Double.parseDouble(litros);
-                        case "Congelado":
-                            String marcaCongelado = lineas.get(i + 5).substring(7);
-                            productos.add(new Congelado(nombre, valorInt, stockInt,marcaCongelado, codigoInt));
-                        case "Fruta":
-                            productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
-                        case "Pan":
-                            productos.add(new Pan(nombre, valorInt, stockInt, codigoInt));
-                        case "Snack":
-                            String marcaSnack = lineas.get(i + 5).substring(7);
-                            productos.add(new Snack(nombre, valorInt, stockInt ,marcaSnack, codigoInt));
-                    }
-
-                     */
 
                     if (producto.equals("Fruta")){
                         productos.add(new Fruta(nombre, valorInt, stockInt, codigoInt));
@@ -122,7 +98,7 @@ public class GestorBaseDatos {
     }
     public static void guardarCambiosUsuarios(ArrayList<Usuario> usuarios) {
         GestorArchivo gestorArchivo = new GestorArchivo();
-        gestorArchivo.escribirArchivo("ArchivosBD/usuarios.txt","");
+        GestorArchivo.escribirArchivo("ArchivosBD/usuarios.txt","");
 
         for (int i = 0; i < usuarios.size(); i++) {
 
@@ -150,7 +126,7 @@ public class GestorBaseDatos {
     }
     public static void guardarCambiosProductos(ArrayList<Producto> productos) {
         GestorArchivo gestorArchivo = new GestorArchivo();
-        gestorArchivo.escribirArchivo("ArchivosBD/productos.txt","");
+        GestorArchivo.escribirArchivo("ArchivosBD/productos.txt","");
         for (Producto p : productos) {
             String nombre = p.getNombre();
             int valor = p.getValor();

@@ -85,6 +85,6 @@ Codigo: 8
 Snack
 Nombre: Papas Fritas
 Valor: 2340
-Stock: 69
+Stock: 68
 Codigo: 14
 Marca: Lays

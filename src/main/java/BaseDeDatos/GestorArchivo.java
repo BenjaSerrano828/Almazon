@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 public class GestorArchivo {
-    public void escribirArchivo(String ruta, String contenido) {
+    public static void escribirArchivo(String ruta, String contenido) {
         Path archivo = Paths.get(ruta);
         try {
             Files.write(archivo, contenido.getBytes());
@@ -12,7 +12,7 @@ public class GestorArchivo {
             System.out.println("El archivo no pudo ser creado");
         }
     }
-    public String leerArchivo(String ruta) {
+    public static String leerArchivo(String ruta) {
         Path archivo = Paths.get(ruta);
         String contenido = "";
         try {
@@ -22,7 +22,7 @@ public class GestorArchivo {
         }
         return contenido;
     }
-    public void nuevaLinea(String ruta, String contenido) {
+    public static void nuevaLinea(String ruta, String contenido) {
         String oldContenido = leerArchivo(ruta);
         escribirArchivo(ruta, oldContenido + "\n" + contenido);
     }

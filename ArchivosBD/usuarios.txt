@@ -17,3 +17,9 @@ Nombre: Seba Torres
 Rut: 20.645.607-8
 Nombre de Usuario: seba
 Contraseña: seba
+
+Cajero
+Nombre: Benjamin Serrano
+Rut: 20.587.734-7
+Nombre de Usuario: benja
+Contraseña: benja
