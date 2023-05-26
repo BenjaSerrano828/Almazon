@@ -1,9 +1,7 @@
-package Usuarios;
-import BaseDeDatos.GestorArchivo;
-import BaseDeDatos.GestorBaseDatos;
-import Productos.*;
-import Sesion.Sesion;
-
+package usuarios;
+import baseDeDatos.GestorBaseDatos;
+import productos.*;
+import sesion.Sesion;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -22,16 +20,11 @@ public class Cajero extends Usuario {
         GestorBaseDatos.cargarDatosProductos(productosParaEditar,"Fruta");
         GestorBaseDatos.cargarDatosProductos(productosParaEditar,"Pan");
         GestorBaseDatos.cargarDatosProductos(productosParaEditar,"Snack");
-
         int opcion = -1;
         do{
             try{
-                System.out.println("\n--- Bienvenido al menu principal ---" +
-                        "\n¿Que desea realizar? Ingrese una opcion: " +
-                        "\n(1)-> Realizar Venta" +
-                        "\n(2)-> Cerrar Sesion");
+                System.out.println("\n--- Bienvenido al menu principal ---\n¿Que desea realizar? Ingrese una opcion:\n(1)-> Realizar Venta\n(2)-> Cerrar Sesion");
                 opcion = teclado.nextInt();
-
                 switch (opcion) {
                     case 1:
                         menuRealizarVenta();
@@ -41,10 +34,10 @@ public class Cajero extends Usuario {
                         sesionNueva.primerInicioSesion();
                         break;
                     default:
-                        System.out.println("Ingrese una opcion valida");
+                        System.err.println("\nIngrese una opcion valida");
                 }
             }catch(InputMismatchException e){
-                System.out.println("Error al seleccionar opcion");
+                System.err.println("\nError al seleccionar opcion");
                 teclado.next();
             }
         }while(opcion!=2);
@@ -65,9 +58,7 @@ public class Cajero extends Usuario {
         p.setStock(stockFinal);
         System.out.println("Producto vendido");
         GestorBaseDatos.guardarCambiosProductos(productosParaEditar);
-
         iniciarMenuPrincipalCajero();
-
     }
     public Producto encontrarProductoPorCodigo(ArrayList<Producto> productos,int codigo){
         for  (Producto p : productos) {
@@ -77,14 +68,6 @@ public class Cajero extends Usuario {
         }
         return null;
     }
-
-
-    public void mostrarProductos(){
-        GestorArchivo gestorArchivo = new GestorArchivo();
-        System.out.println(gestorArchivo.leerArchivo("ArchivosBD/productos.txt"));
-    }
-
-
     @Override
     public String toString() {
         return "\nCajero" +

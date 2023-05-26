@@ -1,4 +1,4 @@
-package Productos;
+package productos;
 
 public class Pan extends Producto {
     public Pan() {

@@ -1,8 +1,8 @@
-package Sesion;
-import BaseDeDatos.GestorBaseDatos;
-import Usuarios.Admin;
-import Usuarios.Cajero;
-import Usuarios.Usuario;
+package sesion;
+import baseDeDatos.GestorBaseDatos;
+import usuarios.Admin;
+import usuarios.Cajero;
+import usuarios.Usuario;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Sesion {
@@ -15,8 +15,7 @@ public class Sesion {
         iniciarSesion();
     }
     public void iniciarSesion() {
-        System.out.println("\n-----Menu Iniciar Sesion-----");
-        System.out.print("Ingrese su nombre de Usuario: ");
+        System.out.println("\n-----Menu Iniciar Sesion-----\nIngrese su nombre de Usuario: ");
         String nombreUsuarioIngresado = teclado.next();
         System.out.print("Ingrese su contraseña: ");
         String contrasenaIngresada = teclado.next();
@@ -24,7 +23,9 @@ public class Sesion {
             Usuario usuarioEncontrado = buscarUsuario(usuarios, nombreUsuarioIngresado);
             direccionarMenu(usuarioEncontrado);
         }else{
+            System.err.println("\nEl nombre de usuario y la contraseña no coinciden");
             iniciarSesion();
+
         }
     }
     public Usuario buscarUsuario(ArrayList<Usuario> usuarios, String nombreUsuario) {

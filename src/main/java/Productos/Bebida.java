@@ -1,4 +1,4 @@
-package Productos;
+package productos;
 
 public class Bebida extends Producto {
     private double pesoLitros;

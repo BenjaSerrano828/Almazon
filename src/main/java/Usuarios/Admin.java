@@ -1,8 +1,8 @@
-package Usuarios;
-import BaseDeDatos.GestorArchivo;
-import BaseDeDatos.GestorBaseDatos;
-import Productos.*;
-import Sesion.Sesion;
+package usuarios;
+import baseDeDatos.GestorArchivo;
+import baseDeDatos.GestorBaseDatos;
+import productos.*;
+import sesion.Sesion;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -10,7 +10,7 @@ public class Admin extends Usuario {
     private static Scanner teclado =  new Scanner(System.in);
     private ArrayList<Producto> productos = new ArrayList<>();
     private ArrayList<Usuario> usuariosParaEditar = new ArrayList<>();
-    public int codigoActual;
+    private int codigoActual;
     public Admin() {
     }
     public Admin(String rut, String nombre, String nombreUsuario, String contrasena) {
@@ -22,11 +22,7 @@ public class Admin extends Usuario {
         int opcion = -1;
         do{
             try{
-                System.out.println("\n--- Bienvenido al menu principal ---" +
-                        "\n¿Que desea realizar? Ingrese una opcion: " +
-                        "\n(1)-> Administrar Usuarios" +
-                        "\n(2)-> Administrar Productos" +
-                        "\n(3)-> Cerrar Sesion");
+                System.out.println("\n--- Bienvenido al menu principal ---\n¿Que desea realizar? Ingrese una opcion:\n(1)-> Administrar Usuarios\n(2)-> Administrar Productos\n(3)-> Cerrar Sesion");
                 opcion = teclado.nextInt();
 
                 switch (opcion) {
@@ -41,10 +37,10 @@ public class Admin extends Usuario {
                         sesionNueva.primerInicioSesion();
                         break;
                     default:
-                        System.out.println("Ingrese una opcion valida");
+                        System.err.println("\nIngrese una opcion valida");
                 }
             }catch(InputMismatchException e){
-                System.out.println("Error al seleccionar opcion");
+                System.err.println("\nError al seleccionar opcion");
                 teclado.next();
             }
         }while(opcion!=3);
@@ -53,14 +49,7 @@ public class Admin extends Usuario {
         int opcion = -1;
         do{
             try{
-                System.out.println("\nBienvenido al Menu de Administracion de Usuarios"+
-                "\n---- Que desea realizar: ----"+
-                "\n(1)-> Crear Nuevo Cajero"+
-                "\n(2)-> Crear Nuevo Admin"+
-                "\n(3)-> Editar usuario"+
-                "\n(4)-> Eliminar usuario"+
-                "\n(0)-> Atras");
-
+                System.out.println("\nBienvenido al Menu de Administracion de Usuarios\n---- Que desea realizar: ----\n(1)-> Crear Nuevo Cajero\n(2)-> Crear Nuevo Admin\n(3)-> Editar usuario\n(4)-> Eliminar usuario\n(0)-> Atras");
                 opcion = teclado.nextInt();
 
                 switch (opcion) {
@@ -79,10 +68,10 @@ public class Admin extends Usuario {
                     case 0:
                         break;
                     default:
-                        System.out.println("Ingrese una opcion valida");
+                        System.err.println("\nIngrese una opcion valida");
                 }
             }catch (InputMismatchException e){
-                System.out.println("Error al seleccionar opcion");
+                System.err.println("\nError al seleccionar opcion");
                 teclado.next();
             }
         }while(opcion!=0);
@@ -109,8 +98,7 @@ public class Admin extends Usuario {
     }
     public void eliminarUsurio(Usuario u){
         System.out.println(u);
-        System.out.println("Estas seguro si deseas eliminar este usuario?"+
-                "\n(1)-> Si\n(2)-> No");
+        System.out.println("Estas seguro si deseas eliminar este usuario?\n(1)-> Si\n(2)-> No");
         int opcion = teclado.nextInt();
         try{
             if (opcion==1){
@@ -120,24 +108,18 @@ public class Admin extends Usuario {
             }else if (opcion==2){
                 menuAdministrarUsuario();
             }else {
-                System.out.println("Ingrese una opcion valida");
+                System.err.println("\nIngrese una opcion valida");
             }
         }catch (InputMismatchException e){
-            System.out.println("Por favor ingrese un numero");
+            System.err.println("\nPor favor ingrese un numero");
         }
     }
     public void menuEditarUsuario(Usuario u){
         int opcion = -1;
         do {
             try{
-                System.out.println("--- Que desea editar?---"+
-                "(1)-> Nombre"+
-                "(2)-> Nombre de Usuario"+
-                "(3)-> Contraseña"+
-                "(0)-> Atras");
-
+                System.out.println("--- Que desea editar?---\n(1)-> Nombre\n(2)-> Nombre de Usuario\n(3)-> Contraseña\n(0)-> Atras");
                 opcion = teclado.nextInt();
-
                 switch (opcion){
                     case 1:
                         editarNombre(u);
@@ -150,6 +132,8 @@ public class Admin extends Usuario {
                         break;
                     case 0:
                         break;
+                    default:
+                        System.err.println("\nIngrese una opcion valida");
                 }
             }catch (InputMismatchException e){
                 System.out.println("Error al seleccionar opcion");
@@ -165,7 +149,6 @@ public class Admin extends Usuario {
         u.setNombre(nuevoNombre);
         System.out.println("Se modifico correctamente el nombre");
         GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
-
     }
     public void editarNombreUsuario(Usuario u){
         Scanner registrarNombreUsuario = new Scanner(System.in);
@@ -176,7 +159,6 @@ public class Admin extends Usuario {
         u.setNombreUsuario(nuevoNombreUsuario);
         System.out.println("Se modifico correctamente el nombre de usuario");
         GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
-
     }
     public void editarContrasena(Usuario u){
         Scanner registrarContra = new Scanner(System.in);
@@ -200,16 +182,10 @@ public class Admin extends Usuario {
         GestorBaseDatos.cargarDatosProductos(productos,"Abarrote");
         codigoActual = GestorBaseDatos.cargarCodigo();
         System.out.println(productos.get(1));
-
         int opcion = -1;
-
         do{
             try{
-                System.out.println("\nQue desea realizar"+
-                "(1)-> Registrar Nuevo Producto"+
-                "(2)-> Modificar Producto"+
-                "(3)-> Eliminar Producto"+
-                "(0)-> Atras");
+                System.out.println("\nQue desea realizar\n(1)-> Registrar Nuevo Producto\n(2)-> Modificar Producto\n(3)-> Eliminar Producto\n(0)-> Atras");
                 opcion = teclado.nextInt();
                 switch (opcion) {
                     case 1:
@@ -235,25 +211,13 @@ public class Admin extends Usuario {
     public void registrarNuevoProducto() {
         Scanner registroMarca = new Scanner(System.in);
         System.out.println(codigoActual);
-
         System.out.println(productos);
-
         Scanner registro = new Scanner(System.in);
-
-        System.out.println("\nQue tipo de producto desea registrar: "+
-                "(1)-> Fruta"+
-                "(2)-> Pan"+
-                "(3)-> Bebida"+
-                "(4)-> Snack"+
-                "(5)-> Congelado"+
-                "(6)-> Abarrote");
+        System.out.println("\nQue tipo de producto desea registrar:\n(1)-> Fruta\n(2)-> Pan\n(3)-> Bebida\n(4)-> Snack\n(5)-> Congelado\n(6)-> Abarrote");
         int opcion = teclado.nextInt();
-
         int codigo = codigoActual;
         codigo++;
-
         System.out.println("Codigo AUTO: " + codigo);
-
         System.out.print("Ingrese el nombre del producto: ");
         String nombre = registro.nextLine();
         System.out.print("Valor por peso (unidad con peso definido).\nIngrese el valor que tendrá el producto: ");
@@ -324,11 +288,11 @@ public class Admin extends Usuario {
                     case 0:
                         break;
                     default:
-                        System.out.println("Error");
+                        System.err.println("\nError");
                         break;
                 }
             } catch (InputMismatchException e){
-                System.out.println("Ingrese una opcion valida");
+                System.err.println("\nIngrese una opcion valida");
                 teclado.next();
             }
         }while (opcion!=0);
@@ -350,7 +314,6 @@ public class Admin extends Usuario {
         String contrasena = teclado.next();
         Usuario cajero = new Cajero(rut,nombre,nombreUsuario,contrasena);
         usuariosParaEditar.add(cajero);
-
         String contenido = cajero.toString();
         GestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
     }
@@ -371,7 +334,6 @@ public class Admin extends Usuario {
         String contrasena = teclado.next();
         Usuario admin = new Admin(rut,nombre,nombreUsuario,contrasena);
         usuariosParaEditar.add(admin);
-
         String contenido = admin.toString();
         GestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
     }
@@ -383,7 +345,8 @@ public class Admin extends Usuario {
             rut = rut.replace("-", "");
             int rutAux = Integer.parseInt(rut.substring(0, rut.length() - 1));
             char digitoVerificador = rut.charAt(rut.length() - 1);
-            int m = 0, s = 1;
+            int m = 0;
+            int s = 1;
             for (; rutAux != 0; rutAux /= 10) {
                 s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
             }
@@ -391,7 +354,7 @@ public class Admin extends Usuario {
                 validar = true;
             }
         } catch (Exception e) {
-            System.out.println("Rut no valido " + e.getMessage());
+            System.err.println("\nRut no valido " + e.getMessage());
         }
         return validar;
     }

@@ -1,12 +1,12 @@
-package Productos;
+package productos;
 public abstract class Producto {
     private String nombre;
     private int codigo;
     private int valor;
     private int stock=0;
-    public Producto() {
+    protected Producto() {
     }
-    public Producto(String nombre, int valor,int stock,int codigo) {
+    protected Producto(String nombre, int valor,int stock,int codigo) {
         this.nombre = nombre;
         this.valor = valor;
         this.stock = stock;

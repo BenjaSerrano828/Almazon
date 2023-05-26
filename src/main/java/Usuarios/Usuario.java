@@ -1,18 +1,18 @@
-package Usuarios;
+package usuarios;
 public abstract class Usuario {
     private String rut;
     protected String nombre;
     protected String nombreUsuario;
     protected String contrasena;
 
-    public Usuario(String rut, String nombre, String nombreUsuario, String contrasena) {
+    protected Usuario(String rut, String nombre, String nombreUsuario, String contrasena) {
         this.rut = rut;
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
     }
 
-    public Usuario() {
+    protected Usuario() {
     }
 
     public String getNombre() {

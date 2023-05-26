@@ -2,5 +2,5 @@ projectKey=Almazon
 serverUrl=http://localhost:9000
 serverVersion=9.9.0.65466
 dashboardUrl=http://localhost:9000/dashboard?id=Almazon
-ceTaskId=AYfkJsXiF4DOiv5FENpJ
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYfkJsXiF4DOiv5FENpJ
+ceTaskId=AYhV44fzyoPpyxwCfKwR
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYhV44fzyoPpyxwCfKwR

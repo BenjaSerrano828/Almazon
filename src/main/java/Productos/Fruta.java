@@ -1,4 +1,4 @@
-package Productos;
+package productos;
 
 public class Fruta extends Producto {
     public Fruta(String nombre, int valor, int stock,int codigo) {

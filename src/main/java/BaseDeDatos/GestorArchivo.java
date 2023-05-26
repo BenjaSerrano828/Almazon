@@ -1,4 +1,4 @@
-package BaseDeDatos;
+package baseDeDatos;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,7 +9,7 @@ public class GestorArchivo {
         try {
             Files.write(archivo, contenido.getBytes());
         } catch (IOException e) {
-            System.out.println("El archivo no pudo ser creado");
+            System.err.println("\nEl archivo no pudo ser creado");
         }
     }
     public static String leerArchivo(String ruta) {
@@ -18,7 +18,7 @@ public class GestorArchivo {
         try {
             contenido = new String(Files.readAllBytes(archivo));
         } catch (IOException e) {
-            System.out.println("El archivo no pudo ser leido");
+            System.err.println("\nEl archivo no pudo ser leido");
         }
         return contenido;
     }

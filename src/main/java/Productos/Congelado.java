@@ -1,4 +1,4 @@
-package Productos;
+package productos;
 
 public class Congelado extends Producto {
     private String marca;
