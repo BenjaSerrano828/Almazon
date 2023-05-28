@@ -296,14 +296,6 @@ public class Admin extends Usuario {
             }
         }while (opcion!=0);
     }
-    private void guardarProducto(Producto producto) {
-        String productoString = producto.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", productoString);
-    }
-    private void guardarCodigo(int codigo) {
-        String codigoString = "Codigo\nCodigo: " + codigo;
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-    }
     public void registrarNuevoCajero(){
         Scanner registrarNombre = new Scanner(System.in);
         System.out.print("Ingrese en nombre del nuevo Cajero: ");
