@@ -1,0 +1,19 @@
+
+
+Admin
+Nombre: ADMIN SUPREMO
+Rut: aaa
+Nombre de Usuario: admin
+Contrasena: admin123
+
+Admin
+Nombre: Benjamin Serrano
+Rut: 20.587.734-7
+Nombre de Usuario: benja
+Contrasena: benja
+
+Cajero
+Nombre: Sebastian Torres
+Rut: 20.645.607-8
+Nombre de Usuario: seba
+Contrasena: seba
