@@ -1,5 +1,4 @@
 
-
 Abarrote
 Nombre: Tallarines
 Valor: 790
@@ -109,3 +108,23 @@ Valor: 2000
 Stock: 23
 Codigo: 15
 Marca: Evercrisp
+
+Pan
+Nombre: PAN
+Valor: 1000
+Stock: 20
+Codigo: 18
+
+Bebida
+Nombre: PEPSI
+Valor: 2300
+Stock: 20
+Codigo: 19
+Litros: 3.0
+
+Snack
+Nombre: DORITOS
+Valor: 2300
+Stock: 20
+Codigo: 20
+Marca: EVERCRISP

@@ -185,7 +185,8 @@ public class Admin extends Usuario {
                 opcion = teclado.nextInt();
                 switch (opcion) {
                     case 1:
-                        crearNuevoProducto();
+                        obtenerValoresNuevoProducto();
+                        //crearNuevoProducto();
                         break;
                     case 2:
                         //Pendiente su implementacion
@@ -204,86 +205,72 @@ public class Admin extends Usuario {
             }
         }while(opcion!=0);
     }
-    public void crearNuevoProducto() {
-        Scanner registroMarca = new Scanner(System.in);
+    public void obtenerValoresNuevoProducto(){
         Scanner registro= new Scanner(System.in);
+        Scanner registroMarca = new Scanner(System.in);
         int opcion = -1;
+        System.out.println("\nQue tipo de producto desea registrar: ");
+        System.out.println("(1)-> Fruta");
+        System.out.println("(2)-> Pan");
+        System.out.println("(3)-> Bebida");
+        System.out.println("(4)-> Snack");
+        System.out.println("(5)-> Congelado");
+        System.out.println("(6)-> Abarrote");
+        opcion = teclado.nextInt();
+
         int codigo = codigoActual;
         codigo++;
+        double pesoLitros = 0;
+        String marca ="";
         System.out.print("Ingrese el nombre del producto: ");
-        String nombre = registro.nextLine();
+        nombre = registro.nextLine();
         System.out.print("Valor por peso (unidad con peso definido).\nIngrese el valor que tendrá el producto: ");
         int valor = teclado.nextInt();
         System.out.print("Stock por unidad o peso.\nIngrese el stock inicial del producto: ");
         int stock = teclado.nextInt();
+
+        if (opcion == 3){
+            System.out.print("Ingrese el peso en litros de la bebida: ");
+            pesoLitros = teclado.nextDouble();
+
+        }
+        if (opcion == 5 || opcion == 6 || opcion == 4){
+            System.out.print("Ingrese la marca: ");
+            marca = registroMarca.nextLine();
+
+        }
+        crearNuevoProducto(nombre,codigo,valor,stock,opcion,pesoLitros,marca);
+    }
+    public Producto crearNuevoProducto(String nombre,int codigo,int valor, int stock, int opcion, double pesoLitros, String marca) {
         String codigoString = "Codigo\nCodigo: " + codigo;
         do{
             try{
-                System.out.println("\nQue tipo de producto desea registrar: ");
-                System.out.println("(1)-> Fruta");
-                System.out.println("(2)-> Pan");
-                System.out.println("(3)-> Bebida");
-                System.out.println("(4)-> Snack");
-                System.out.println("(5)-> Congelado");
-                System.out.println("(6)-> Abarrote");
-                opcion = teclado.nextInt();
+
                 switch (opcion){
                     case 1:
-                        Producto fruta = new Fruta(nombre,valor,stock,codigo);
-                        String frutaString = fruta.toString();
-                        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", frutaString);
-                        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-                        System.out.println("Fruta registrada");
-                        iniciarMenuPrincipalAdmin();
-                        break;
+                        Fruta fruta = registrarFruta(nombre, valor, stock, codigo, codigoString);
+                        //iniciarMenuPrincipalAdmin();
+                        return fruta;
                     case 2:
-                        Producto pan = new Pan(nombre,valor,stock,codigo);
-                        String panString = pan.toString();
-                        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", panString);
-                        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-                        System.out.println("Pan registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
+                        Pan pan = registrarPan(nombre, valor, stock, codigo, codigoString);
+                        //iniciarMenuPrincipalAdmin();
+                        return pan;
                     case 3:
-                        System.out.print("Ingrese el peso en litros de la bebida: ");
-                        double pesoLitros = teclado.nextDouble();
-                        Producto bebida = new Bebida(nombre,valor,stock,codigo,pesoLitros);
-                        String bebidaString = bebida.toString();
-                        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", bebidaString);
-                        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-                        System.out.println("Bebida registrada");
-                        iniciarMenuPrincipalAdmin();
-                        break;
+                        Bebida bebida = registrarBebida(nombre, valor, stock, codigo, codigoString, pesoLitros);
+                        //iniciarMenuPrincipalAdmin();
+                        return bebida;
                     case 4:
-                        System.out.print("Ingrese la marca del Snack: ");
-                        String marcaSnack = registroMarca.nextLine();
-                        Producto snack = new Snack(nombre,valor,stock,marcaSnack,codigo);
-                        String snackString = snack.toString();
-                        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", snackString);
-                        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-                        System.out.println("Snack registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
+                        Snack snack =registrarSnack(marca, nombre, valor, stock, codigo, codigoString);
+                        //iniciarMenuPrincipalAdmin();
+                        return snack;
                     case 5:
-                        System.out.print("Ingrese la marca del Congelado: ");
-                        String marcaCongelado = registroMarca.nextLine();
-                        Producto congelado = new Congelado(nombre,valor,stock,marcaCongelado,codigo);
-                        String congeladoString = congelado.toString();
-                        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", congeladoString);
-                        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-                        System.out.println("Congelado registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
+                        Congelado congelado = registrarCongelado(marca, nombre, valor, stock, codigo, codigoString);
+                        //iniciarMenuPrincipalAdmin();
+                        return congelado;
                     case 6:
-                        System.out.print("Ingrese la marca del Abarrote: ");
-                        String marcaAbarrote = registroMarca.nextLine();
-                        Producto abarrote = new Abarrote(nombre,valor,stock,codigo,marcaAbarrote);
-                        String abarroteString = abarrote.toString();
-                        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", abarroteString);
-                        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-                        System.out.println("Abarrote registrado");
-                        iniciarMenuPrincipalAdmin();
-                        break;
+                        Abarrote abarrote = registrarAbarrote(marca, nombre, valor, stock, codigo, codigoString);
+                        //iniciarMenuPrincipalAdmin();
+                        return abarrote;
                     case 0:
                         break;
                     default:
@@ -295,6 +282,57 @@ public class Admin extends Usuario {
                 teclado.next();
             }
         }while (opcion!=0);
+        return null;
+    }
+
+    public Abarrote registrarAbarrote(String marcaAbarrote, String nombre, int valor, int stock, int codigo, String codigoString){
+        Producto abarrote = new Abarrote(nombre,valor,stock,codigo,marcaAbarrote);
+        String abarroteString = abarrote.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", abarroteString);
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+        System.out.println("Abarrote registrado");
+        return (Abarrote) abarrote;
+
+    }
+    public Bebida registrarBebida(String nombre, int valor, int stock, int codigo, String codigoString, double pesoLitros){
+        Producto bebida = new Bebida(nombre,valor,stock,codigo,pesoLitros);
+        String bebidaString = bebida.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", bebidaString);
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+        System.out.println("Bebida registrada");
+        return (Bebida) bebida;
+    }
+    public Congelado registrarCongelado(String marcaCongelado, String nombre, int valor, int stock, int codigo, String codigoString){
+        Producto congelado = new Congelado(nombre,valor,stock,marcaCongelado,codigo);
+        String congeladoString = congelado.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", congeladoString);
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+        System.out.println("Congelado registrado");
+        return (Congelado) congelado;
+    }
+    public Fruta registrarFruta(String nombre, int valor, int stock, int codigo, String codigoString){
+        Producto fruta = new Fruta(nombre,valor,stock,codigo);
+        String frutaString = fruta.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", frutaString);
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+        System.out.println("Fruta registrada");
+        return (Fruta) fruta;
+    }
+    public Pan registrarPan(String nombre, int valor, int stock, int codigo, String codigoString){
+        Producto pan = new Pan(nombre,valor,stock,codigo);
+        String panString = pan.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", panString);
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+        System.out.println("Pan registrado");
+        return (Pan) pan;
+    }
+    public Snack registrarSnack(String marcaSnack, String nombre, int valor, int stock, int codigo, String codigoString){
+        Producto snack = new Snack(nombre,valor,stock,marcaSnack,codigo);
+        String snackString = snack.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", snackString);
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+        System.out.println("Snack registrado");
+        return (Snack) snack;
     }
     public void registrarNuevoCajero(){
         Scanner registrarNombre = new Scanner(System.in);
