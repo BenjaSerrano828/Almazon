@@ -15,17 +15,17 @@ public class Sesion {
         iniciarSesion();
     }
     public void iniciarSesion() {
-        System.out.println("\n-----Menu Iniciar Sesion-----\nIngrese su nombre de Usuario: ");
+        System.out.println("\n-----Menu Iniciar Sesion-----");
+        System.out.print("Ingrese su nombre de Usuario: ");
         String nombreUsuarioIngresado = teclado.next();
-        System.out.print("Ingrese su contraseña: ");
+        System.out.print("Ingrese su contrasena: ");
         String contrasenaIngresada = teclado.next();
         if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)){
             Usuario usuarioEncontrado = buscarUsuario(usuarios, nombreUsuarioIngresado);
             direccionarMenu(usuarioEncontrado);
         }else{
-            System.err.println("\nEl nombre de usuario y la contraseña no coinciden");
+            System.err.println("\nEl nombre de usuario y la contrasena no coinciden\n");
             iniciarSesion();
-
         }
     }
     public Usuario buscarUsuario(ArrayList<Usuario> usuarios, String nombreUsuario) {

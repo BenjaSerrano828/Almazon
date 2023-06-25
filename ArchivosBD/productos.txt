@@ -1,5 +1,4 @@
 
-
 Abarrote
 Nombre: Tallarines
 Valor: 790
@@ -7,26 +6,40 @@ Stock: 40
 Codigo: 9
 Marca: Carozzi
 
+Abarrote
+Nombre: Arroz
+Valor: 2000
+Stock: 46
+Codigo: 17
+Marca: Miraflores
+
 Bebida
 Nombre: Fanta
-Valor: 2700
+Valor: 2300
 Stock: 30
 Codigo: 7
 Litros: 2.0
 
 Bebida
 Nombre: Pepsi
-Valor: 2400
+Valor: 2700
 Stock: 20
 Codigo: 10
-Litros: 2.5
+Litros: 2.0
 
 Bebida
 Nombre: Coca Cola
-Valor: 2700
+Valor: 2300
 Stock: 40
 Codigo: 11
 Litros: 2.0
+
+Congelado
+Nombre: Hamburguesa
+Valor: 790
+Stock: 26
+Codigo: 16
+Marca: La crianza
 
 Fruta
 Nombre: Manzana
@@ -36,20 +49,20 @@ Codigo: 1
 
 Fruta
 Nombre: Pera
-Valor: 40
-Stock: 3
+Valor: 400
+Stock: 20
 Codigo: 2
 
 Fruta
 Nombre: Naranja
-Valor: 700
-Stock: 80
+Valor: 300
+Stock: 75
 Codigo: 3
 
 Fruta
 Nombre: Uva
-Valor: 70
-Stock: 600
+Valor: 600
+Stock: 60
 Codigo: 4
 
 Fruta
@@ -66,25 +79,52 @@ Codigo: 6
 
 Fruta
 Nombre: Mandarina
-Valor: 40
-Stock: 10
+Valor: 400
+Stock: 20
 Codigo: 12
 
 Fruta
 Nombre: Tomate
 Valor: 500
-Stock: 15
+Stock: 25
 Codigo: 13
 
 Pan
 Nombre: Marraqueta
 Valor: 500
-Stock: 40
+Stock: 35
 Codigo: 8
 
 Snack
 Nombre: Papas Fritas
 Valor: 2340
-Stock: 68
+Stock: 50
 Codigo: 14
 Marca: Lays
+
+Snack
+Nombre: Cheetos
+Valor: 2000
+Stock: 23
+Codigo: 15
+Marca: Evercrisp
+
+Pan
+Nombre: PAN
+Valor: 1000
+Stock: 20
+Codigo: 18
+
+Bebida
+Nombre: PEPSI
+Valor: 2300
+Stock: 20
+Codigo: 19
+Litros: 3.0
+
+Snack
+Nombre: DORITOS
+Valor: 2300
+Stock: 20
+Codigo: 20
+Marca: EVERCRISP

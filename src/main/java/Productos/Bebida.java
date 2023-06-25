@@ -1,20 +1,20 @@
 package productos;
 
 public class Bebida extends Producto {
-    private double pesoLitros;
+    private double pesoLitro;
     public Bebida() {
     }
-    public Bebida(String nombre, int valor,int stock, int codigo,double pesoLitros) {
+    public Bebida(String nombre, int valor,int stock, int codigo,double pesoLitro) {
         super(nombre, valor,stock,codigo);
-        this.pesoLitros=pesoLitros;
+        this.pesoLitro = pesoLitro;
     }
-    public double getPesoLitros() {
-        return pesoLitros;
+    public double getPesoLitro() {
+        return pesoLitro;
     }
     @Override
     public String toString() {
         return "\nBebida" +
                 super.toString() +
-                "\nLitros: "+pesoLitros;
+                "\nLitros: "+ pesoLitro;
     }
 }

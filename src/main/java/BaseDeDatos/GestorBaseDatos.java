@@ -124,7 +124,7 @@ public class GestorBaseDatos {
                 contenido = fruta.toString();
                 GestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
             }else if (p instanceof Bebida){
-                double litros = ((Bebida) p).getPesoLitros();
+                int litros = (int) ((Bebida) p).getPesoLitro();
                 Producto bebida = new Bebida(nombre,valor,stock,codigo,litros);
                 contenido = bebida.toString();
                 GestorArchivo.nuevaLinea("ArchivosBD/productos.txt",contenido);
