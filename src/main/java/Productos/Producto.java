@@ -21,9 +21,6 @@ public abstract class Producto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }

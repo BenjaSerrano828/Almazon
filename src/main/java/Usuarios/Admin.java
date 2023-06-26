@@ -49,25 +49,21 @@ public class Admin extends Usuario {
         int opcion = -1;
         do{
             try{
-                System.out.println("\nBienvenido al Menu de Administracion de Usuarios\n---- Que desea realizar: ----\n(1)-> Crear Nuevo Cajero\n(2)-> Crear Nuevo Admin\n(3)-> Editar usuario\n(4)-> Eliminar usuario\n(0)-> Atras");
+                System.out.println("\nBienvenido al Menu de Administracion de Usuarios\n---- Que desea realizar: ----\n(1)-> Crear Nuevo Usuario\n(2)-> Editar usuario\n(3)-> Eliminar usuario\n(0)-> Atras");
                 opcion = teclado.nextInt();
 
                 switch (opcion) {
                     case 1:
-                        obtenerDatosCajero();
-                        //registrarNuevoCajero();
+                        obtenerDatosNuevoUsuario();
                         break;
                     case 2:
-                        obtenerDatosAdmin();
-                        //registrarNuevoAdmin();
-                        break;
-                    case 3:
                         buscarUsuarioAEditar();
                         break;
-                    case 4:
+                    case 3:
                         buscarUsuarioAEliminar();
                         break;
                     case 0:
+                        iniciarMenuPrincipalAdmin();
                         break;
                     default:
                         System.err.println("\nIngrese una opcion valida");
@@ -149,7 +145,7 @@ public class Admin extends Usuario {
                 + "\nIngrese el nuevo nombre: ");
         String nuevoNombre = registrarNombre.nextLine();
         u.setNombre(nuevoNombre);
-        System.out.println("Se modifico correctamente el nombre a: " + u.getNombre());
+        System.out.println("Se modifico correctamente el nombre");
         GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
     }
     public void editarNombreUsuario(Usuario u){
@@ -159,17 +155,16 @@ public class Admin extends Usuario {
                 "\nIngrese el nuevo nombre de usuario: ");
         String nuevoNombreUsuario = registrarNombreUsuario.next();
         u.setNombreUsuario(nuevoNombreUsuario);
-        System.out.println("Se modifico correctamente el nombre de usuario a: " + u.getNombreUsuario());
+        System.out.println("Se modifico correctamente el nombre de usuario");
         GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
     }
     public void editarContrasena(Usuario u){
         Scanner registrarContra = new Scanner(System.in);
-
         System.out.println("Contraseña actual: "+ u.getContrasena()+
                 "\nIngrese la nueva contrasena: ");
         String nuevaContra = registrarContra.next();
         u.setContrasena(nuevaContra);
-        System.out.println("Se modifico correctamente la contraseña a: " + u.getContrasena());
+        System.out.println("Se modifico correctamente la contraseña");
         GestorBaseDatos.guardarCambiosUsuarios(usuariosParaEditar);
     }
     private void menuAdministrarProducto() {
@@ -188,7 +183,6 @@ public class Admin extends Usuario {
                 switch (opcion) {
                     case 1:
                         obtenerValoresNuevoProducto();
-                        //crearNuevoProducto();
                         break;
                     case 2:
                         //Pendiente su implementacion
@@ -197,6 +191,7 @@ public class Admin extends Usuario {
                         //Pendiente su implementacion
                         break;
                     case 0:
+                        iniciarMenuPrincipalAdmin();
                         break;
                     default:
                         System.out.println("Ingrese una opcion valida");
@@ -208,179 +203,223 @@ public class Admin extends Usuario {
         }while(opcion!=0);
     }
     public void obtenerValoresNuevoProducto(){
-        Scanner registro= new Scanner(System.in);
-        Scanner registroMarca = new Scanner(System.in);
-        int opcion;
-        System.out.println("\nQue tipo de producto desea registrar: ");
-        System.out.println("(1)-> Fruta");
-        System.out.println("(2)-> Pan");
-        System.out.println("(3)-> Bebida");
-        System.out.println("(4)-> Snack");
-        System.out.println("(5)-> Congelado");
-        System.out.println("(6)-> Abarrote");
-        opcion = teclado.nextInt();
-
+        Scanner registro = new Scanner(System.in);
+        int opcion = obtenerOpcionRegistrarNuevoProducto(registro);
+        String nombre = obtenerNombreProducto(teclado);
+        int valor = obtenerValorProducto(registro);
+        int stock = obtenerStockProducto(registro);
         int codigo = codigoActual;
         codigo++;
-        double pesoLitros = 0;
-        String marca ="";
-        System.out.print("Ingrese el nombre del producto: ");
-        nombre = registro.nextLine();
-        System.out.print("Valor por peso (unidad con peso definido).\nIngrese el valor que tendrá el producto: ");
-        int valor = teclado.nextInt();
-        System.out.print("Stock por unidad o peso.\nIngrese el stock inicial del producto: ");
-        int stock = teclado.nextInt();
 
-        if (opcion == 3){
-            System.out.print("Ingrese el peso en litros de la bebida: ");
-            pesoLitros = teclado.nextDouble();
-
+        double pesoLitros=0;
+        if (opcion==3){
+            pesoLitros = obtenerPesoLitrosProducto(registro);
         }
-        if (opcion == 5 || opcion == 6 || opcion == 4){
-            System.out.print("Ingrese la marca: ");
-            marca = registroMarca.nextLine();
-
+        String marca="";
+        if (opcion == 4 || opcion == 5 || opcion == 6){
+            marca = obtenerMarcaProduto(registro);
         }
+
         crearNuevoProducto(nombre,codigo,valor,stock,opcion,pesoLitros,marca);
+        menuAdministrarProducto();
     }
     public Producto crearNuevoProducto(String nombre,int codigo,int valor, int stock, int opcion, double pesoLitros, String marca) {
-        String codigoString = "Codigo\nCodigo: " + codigo;
-        do{
-            try{
-
-                switch (opcion){
+        do {
+            try {
+                switch (opcion) {
                     case 1:
-                        Fruta fruta = registrarFruta(nombre, valor, stock, codigo, codigoString);
+                        Producto fruta = new Fruta(nombre, valor, stock, codigo);
+                        guardarProducto(fruta);
+                        guardarCodigo(codigo);
                         //iniciarMenuPrincipalAdmin();
                         return fruta;
                     case 2:
-                        Pan pan = registrarPan(nombre, valor, stock, codigo, codigoString);
+                        Producto pan = new Pan(nombre, valor, stock, codigo);
+                        guardarProducto(pan);
+                        guardarCodigo(codigo);
                         //iniciarMenuPrincipalAdmin();
                         return pan;
                     case 3:
-                        Bebida bebida = registrarBebida(nombre, valor, stock, codigo, codigoString, pesoLitros);
+                        Producto bebida = new Bebida(nombre, valor, stock, codigo, pesoLitros);
+                        guardarProducto(bebida);
+                        guardarCodigo(codigo);
                         //iniciarMenuPrincipalAdmin();
                         return bebida;
                     case 4:
-                        Snack snack =registrarSnack(marca, nombre, valor, stock, codigo, codigoString);
+                        Producto snack = new Snack(nombre, valor, stock, marca, codigo);
+                        guardarProducto(snack);
+                        guardarCodigo(codigo);
                         //iniciarMenuPrincipalAdmin();
                         return snack;
                     case 5:
-                        Congelado congelado = registrarCongelado(marca, nombre, valor, stock, codigo, codigoString);
+                        Producto congelado = new Congelado(nombre, valor, stock, marca, codigo);
+                        guardarProducto(congelado);
+                        guardarCodigo(codigo);
                         //iniciarMenuPrincipalAdmin();
                         return congelado;
                     case 6:
-                        Abarrote abarrote = registrarAbarrote(marca, nombre, valor, stock, codigo, codigoString);
+                        Producto abarrote = new Abarrote(nombre, valor, stock, codigo, marca);
+                        guardarProducto(abarrote);
+                        guardarCodigo(codigo);
                         //iniciarMenuPrincipalAdmin();
                         return abarrote;
                     case 0:
                         break;
                     default:
-                        System.err.println("\nError");
+                        System.err.println("\nError: Ingrese una opción válida");
                         break;
                 }
-            } catch (InputMismatchException e){
-                System.err.println("\nIngrese una opcion valida");
+            } catch (InputMismatchException e) {
+                System.err.println("\nError: Ingrese una opción válida");
                 teclado.next();
             }
-        }while (opcion!=0);
+        } while (opcion != 0);
         return null;
     }
 
-    public Abarrote registrarAbarrote(String marcaAbarrote, String nombre, int valor, int stock, int codigo, String codigoString){
-        Producto abarrote = new Abarrote(nombre,valor,stock,codigo,marcaAbarrote);
-        String abarroteString = abarrote.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", abarroteString);
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-        System.out.println("Abarrote registrado");
-        return (Abarrote) abarrote;
-
+    private double obtenerPesoLitrosProducto(Scanner registro){
+        System.out.print("Ingrese el peso en litros de la bebida: ");
+        return registro.nextDouble();
     }
-    public Bebida registrarBebida(String nombre, int valor, int stock, int codigo, String codigoString, double pesoLitros){
-        Producto bebida = new Bebida(nombre,valor,stock,codigo,pesoLitros);
-        String bebidaString = bebida.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", bebidaString);
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-        System.out.println("Bebida registrada");
-        return (Bebida) bebida;
+    private String obtenerMarcaProduto(Scanner registro){
+        System.out.print("Ingrese la marca del Snack: ");
+        return registro.nextLine();
     }
-    public Congelado registrarCongelado(String marcaCongelado, String nombre, int valor, int stock, int codigo, String codigoString){
-        Producto congelado = new Congelado(nombre,valor,stock,marcaCongelado,codigo);
-        String congeladoString = congelado.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", congeladoString);
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-        System.out.println("Congelado registrado");
-        return (Congelado) congelado;
+    private int obtenerOpcionRegistrarNuevoProducto(Scanner registro){
+        System.out.println("\nQué tipo de producto desea registrar:\n(1)-> Fruta\n(2)-> Pan\n(3)-> Bebida\n(4)-> Snack\n(5)-> Congelado\n(6)-> Abarrote");
+        return registro.nextInt();
     }
-    public Fruta registrarFruta(String nombre, int valor, int stock, int codigo, String codigoString){
-        Producto fruta = new Fruta(nombre,valor,stock,codigo);
-        String frutaString = fruta.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", frutaString);
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-        System.out.println("Fruta registrada");
-        return (Fruta) fruta;
-    }
-    public Pan registrarPan(String nombre, int valor, int stock, int codigo, String codigoString){
-        Producto pan = new Pan(nombre,valor,stock,codigo);
-        String panString = pan.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", panString);
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-        System.out.println("Pan registrado");
-        return (Pan) pan;
-    }
-    public Snack registrarSnack(String marcaSnack, String nombre, int valor, int stock, int codigo, String codigoString){
-        Producto snack = new Snack(nombre,valor,stock,marcaSnack,codigo);
-        String snackString = snack.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", snackString);
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
-        System.out.println("Snack registrado");
-        return (Snack) snack;
+    private String obtenerNombreProducto(Scanner registro) {
+        System.out.print("Ingrese el nombre del producto: ");
+        return registro.nextLine();
     }
 
-    public void obtenerDatosCajero(){
+    private int obtenerValorProducto(Scanner registro) {
+        System.out.print("Valor por peso (unidad con peso definido).\nIngrese el valor que tendrá el producto: ");
+        return registro.nextInt();
+    }
+
+    private int obtenerStockProducto(Scanner registro) {
+        System.out.print("Stock por unidad o peso.\nIngrese el stock inicial del producto: ");
+        return registro.nextInt();
+    }
+
+    private void guardarProducto(Producto producto) {
+        String productoString = producto.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt", productoString);
+        System.out.println(producto.getClass()+producto.getNombre()+" registrado/a");
+    }
+    private void guardarCodigo(int codigo) {
+        String codigoString = "Codigo\nCodigo: " + codigo;
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
+    }
+    public void actualizarCodigo(String code){
+        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",code);
+    }
+
+    private void generarSegunTipo(Producto p, String codigo) {
+        String productoString = p.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt",productoString);
+        actualizarCodigo(codigo);
+        System.out.println("Producto registrado");
+        iniciarMenuPrincipalAdmin();
+    }
+
+    public Usuario registrarNuevoCajero(){
         Scanner registrarNombre = new Scanner(System.in);
-        System.out.print("Ingrese en nombre del nuevo Cajero: ");
+        System.out.println("Ingrese en nombre del nuevo Cajero");
         String nombre = registrarNombre.nextLine();
         String rut;
         do {
-            System.out.print("RUT con puntos y guion. Ej: 12.345.678-9\nIngrese el rut del nuevo Cajero: ");
+            System.out.print("RUT con puntos y guion. Ej: 12.345.678-9"+
+                    "\nIngrese el rut del nuevo Cliente: ");
             rut = teclado.next();
         }while(!validarRut(rut));
-        System.out.print("Ingrese el nombre de usuario del nuevo Cajero: ");
+        System.out.println("Ingrese el nombre de usuario del nuevo Cajero");
         String nombreUsuario = teclado.next();
-        System.out.print("Ingrese la contraseña del nuevo Cajero: ");
+        System.out.println("Ingrese la contraseña del nuevo Cajero");
         String contrasena = teclado.next();
-        registrarNuevoCajero(nombre,rut,nombreUsuario,contrasena);
-    }
-    public Usuario registrarNuevoCajero(String nombre, String rut,String nombreUsuario, String contrasena){
         Usuario cajero = new Cajero(rut,nombre,nombreUsuario,contrasena);
-        usuariosParaEditar.add(cajero);
-        String contenido = cajero.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
         return cajero;
     }
-
-    public void obtenerDatosAdmin(){
+    public Usuario registrarNuevoAdmin() {
         Scanner registrarNombre = new Scanner(System.in);
-        System.out.print("\nIngrese en nombre del nuevo Admin: ");
+        System.out.print("\nIngrese en nombre del nuevo Admin");
         String nombre = registrarNombre.nextLine();
         String rut;
         do {
-            System.out.print("RUT con puntos y guion. Ej: 12.345.678-9\nIngrese el rut del nuevo Admin: ");
+            System.out.println("RUT con puntos y guion. Ej: 12.345.678-9"+
+                    "\nIngrese el rut del nuevo Admin");
             rut = teclado.next();
         }while(!validarRut(rut));
-        System.out.print("Ingrese el nombre de usuario del nuevo Admin: ");
+        System.out.println("Ingrese el nombre de usuario del nuevo Admin");
         String nombreUsuario = teclado.next();
-        System.out.print("Ingrese la contraseña del nuevo Admin: ");
+        System.out.println("Ingrese la contraseña del nuevo Admin");
         String contrasena = teclado.next();
-        registrarNuevoAdmin(nombre,rut,nombreUsuario,contrasena);
-    }
-    public Usuario registrarNuevoAdmin(String nombre, String rut,String nombreUsuario, String contrasena) {
         Usuario admin = new Admin(rut,nombre,nombreUsuario,contrasena);
-        usuariosParaEditar.add(admin);
-        String contenido = admin.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
         return admin;
+    }
+
+    public void guardarUsuario(Usuario u){
+        System.out.println(u.getClass());
+        usuariosParaEditar.add(u);
+        String contenido = u.toString();
+        GestorArchivo.nuevaLinea("ArchivosBD/usuarios.txt",contenido);
+    }
+
+
+    public void obtenerDatosNuevoUsuario(){
+        int opcion = obtenerNuevoTipoUsuario();
+        String nombre = obtenerNuevoNombre();
+        String rut = obtenerNuevoRut();
+        String nombreUsuario = obtenerNuevoNombreUsuario();
+        String contrasena = obtenerNuevaContrasena();
+        registrarNuevoUsuario(opcion,nombre,nombreUsuario,rut,contrasena);
+    }
+
+
+    public int obtenerNuevoTipoUsuario(){
+        System.out.println("Que tipo de Usuario deseas registrar: \n(1)-> Cajero\n(2)-> Admin");
+        return teclado.nextInt();
+    }
+    public String obtenerNuevoNombre(){
+        System.out.print("\nIngrese en nombre del nuevo Usuario: ");
+        return teclado.nextLine();
+    }
+    public String obtenerNuevoNombreUsuario(){
+        System.out.println("Ingrese el nombre de usuario del nuevo Usuario: ");
+        return teclado.next();
+    }
+
+    public String obtenerNuevaContrasena(){
+        System.out.println("Ingrese la contraseña del nuevo Usuario: ");
+        return teclado.next();
+    }
+
+    public String obtenerNuevoRut(){
+        String rut;
+        do {
+            System.out.println("RUT con puntos y guion. Ej: 12.345.678-9\nIngrese el rut del nuevo Usuario: ");
+            rut = teclado.next();
+        }while(!validarRut(rut));
+        return rut;
+    }
+
+
+    public Usuario registrarNuevoUsuario(int opcion, String nombre, String nombreUsuario, String rut, String contrasena) {
+
+        switch (opcion){
+            case 1:
+                Cajero cajero = new Cajero(rut,nombre,nombreUsuario,contrasena);
+                guardarUsuario(cajero);
+
+                return cajero;
+            case 2:
+                Admin admin = new Admin(rut,nombre,nombreUsuario,contrasena);
+                guardarUsuario(admin);
+                return admin;
+        }
+        return null;
     }
     public boolean validarRut(String rut) {
         boolean validar = false;
@@ -392,7 +431,7 @@ public class Admin extends Usuario {
             char digitoVerificador = rut.charAt(rut.length() - 1);
             int m = 0;
             int s = 1;
-            for (; rutAux != 0; rutAux /= 10) {
+            for (; rutAux!=0; rutAux/=10) {
                 s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
             }
             if (digitoVerificador == (char) (s != 0 ? s + 47 : 75)) {
@@ -409,7 +448,7 @@ public class Admin extends Usuario {
                 "\nNombre: "+ getNombre() +
                 "\nRut: "+getRut() +
                 "\nNombre de Usuario: "+getNombreUsuario() +
-                "\nContrasena: "+getContrasena();
+                "\nContraseña: "+getContrasena();
     }
 
 }

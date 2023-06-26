@@ -1,6 +1,6 @@
-
 Admin
 Nombre: ADMIN SUPREMO
 Rut: aaa
 Nombre de Usuario: admin
-Contrasena: admin123
+Contraseña: admin123
+
