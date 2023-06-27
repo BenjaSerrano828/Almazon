@@ -28,6 +28,8 @@ public class Sesion {
         }
     }
     public boolean iniciarSesion(String contrasenaIngresada, String nombreUsuarioIngresado) {
+        usuarios.clear();
+        GestorBaseDatos.cargarDatosUsuarios(usuarios);
         boolean valido;
         if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)){
             valido = true;
@@ -69,5 +71,4 @@ public class Sesion {
         System.out.print("Ingrese su contraseña: ");
         return teclado.next();
     }
-
 }

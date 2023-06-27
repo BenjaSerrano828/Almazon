@@ -3,9 +3,3 @@ Nombre: ADMIN SUPREMO
 Rut: aaa
 Nombre de Usuario: admin
 Contraseña: admin123
-
-Admin
-Nombre: Sebastian Torres
-Rut: 20.645.607-8
-Nombre de Usuario: seba
-Contraseña: seba123
