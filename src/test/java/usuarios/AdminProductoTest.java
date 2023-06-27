@@ -1,20 +1,20 @@
 package usuarios;
 
 import baseDeDatos.GestorBaseDatos;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import productos.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class AdminProductoTest {
     Admin admin = new Admin();
-    static ArrayList<Producto> productos = new ArrayList<Producto>();
-    @BeforeAll
-    public static void setUpBeforeAll() {
+    static ArrayList<Producto> productos = new ArrayList<>();
+
+    @BeforeEach
+    public void setUpBeforeEach() {
         GestorBaseDatos.cargarDatosProductos(productos,"Fruta");
         GestorBaseDatos.cargarDatosProductos(productos,"Pan");
         GestorBaseDatos.cargarDatosProductos(productos,"Snack");
@@ -22,26 +22,9 @@ class AdminTest {
         GestorBaseDatos.cargarDatosProductos(productos,"Congelado");
         GestorBaseDatos.cargarDatosProductos(productos,"Abarrote");
     }
-    /*
+
     @Test
-    public void testCrearNuevoProducto(){
-        boolean igual = false;
-        Producto abarrote = admin.crearNuevoProducto("Tallarines",100,2000,10,6,0,"Carozzi");
-        Producto abarrote2 = new Abarrote("Tallarines", 2000, 10,100,"Carozzi");
-        if(abarrote.getNombre() == abarrote2.getNombre()){
-            if(abarrote.getValor() == abarrote2.getValor()){
-                if(abarrote.getCodigo() == abarrote2.getCodigo()){
-                    if(abarrote.getStock() == abarrote2.getStock()){
-                        if(((Abarrote) abarrote).getMarca() == ((Abarrote) abarrote2).getMarca()){
-                            igual = true;
-                        }
-                    }
-                }
-            }
-        }
-        assertTrue(igual);
-    }*/
-    @Test
+    @Order(1)
     public void testCrearNuevoAbarrote(){
         boolean igual = false;
         Producto abarrote = admin.crearNuevoProducto("Tallarines",105,2000,10,6,0,"Carozzi");
@@ -51,7 +34,9 @@ class AdminTest {
         }
         assertTrue(igual);
     }
+
     @Test
+    @Order(2)
     public void testCrearNuevaBebida(){
         boolean igual = false;
         Producto bebida = admin.crearNuevoProducto("Canada Dry",100,2000,10,3,3,"");
@@ -62,6 +47,8 @@ class AdminTest {
         assertTrue(igual);
     }
     @Test
+    @Order(3)
+
     public void testCrearNuevoCongelado(){
         boolean igual = false;
         Producto congelado = admin.crearNuevoProducto("Nuggets de pescado",100,2000,10,5,0,"Super Pollo");
@@ -72,6 +59,7 @@ class AdminTest {
         assertTrue(igual);
     }
     @Test
+    @Order(4)
     public void testCrearNuevaFruta(){
         boolean igual = false;
         Producto fruta = admin.crearNuevoProducto("Platano",100,2000,10,1,0,"");
@@ -82,6 +70,8 @@ class AdminTest {
         assertTrue(igual);
     }
     @Test
+    @Order(5)
+
     public void testCrearNuevoPan(){
         boolean igual = false;
         Producto pan = admin.crearNuevoProducto("Marraqueta",100,2000,10,2,0,"");
@@ -92,6 +82,8 @@ class AdminTest {
         assertTrue(igual);
     }
     @Test
+    @Order(6)
+
     public void testCrearNuevoSnack(){
         boolean igual = false;
         Producto snack = admin.crearNuevoProducto("Tostitos",100,2000,10,4,0,"Evercrisp");
@@ -102,12 +94,15 @@ class AdminTest {
         assertTrue(igual);
     }
     @Test
+    @Order(7)
+
     public void testGuardarProducto(){
         boolean existe = false;
         int codigo = 105; // codigo del abarrote creado en el testCrearAbarrote()
         for  (Producto p: productos) {
             if (p.getCodigo() == codigo){
                 existe = true;
+                break;
             }
         }
         assertTrue(existe);

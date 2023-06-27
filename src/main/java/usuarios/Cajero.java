@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Cajero extends Usuario {
     Scanner teclado = new Scanner(System.in);
     ArrayList<Producto> productosParaEditar = new ArrayList<>();
-    private int valorTotalVenta = 0;
     public Cajero(String rut, String nombre, String nombreUsuario, String contrasena) {
         super(rut, nombre, nombreUsuario, contrasena);
     }
@@ -28,7 +27,7 @@ public class Cajero extends Usuario {
                 opcion = teclado.nextInt();
                 switch (opcion) {
                     case 1:
-                        venderProducto();
+                        menuRealizarVenta();
                         break;
                     case 2:
                         Sesion sesionNueva = new Sesion();
@@ -43,39 +42,22 @@ public class Cajero extends Usuario {
             }
         }while(opcion!=2);
     }
-    public void venderProducto(){
+    public void menuRealizarVenta(){
         System.out.println(productosParaEditar);
-        System.out.print("\nIngrese el codigo del producto: ");
+        System.out.print("Ingrese el codigo del producto: ");
         int codigo = teclado.nextInt();
-        Producto p = encontrarProductoPorCodigo(productosParaEditar,codigo);
+        venderProducto(encontrarProductoPorCodigo(productosParaEditar,codigo));
+    }
+    public void venderProducto(Producto p){
         System.out.println(p);
         System.out.print("Ingrese la cantidad a vender: ");
         int cantidadVendida = teclado.nextInt();
         int stockActual = p.getStock();
         int stockFinal = stockActual - cantidadVendida;
         p.setStock(stockFinal);
-        int valorProductos = p.getValor() * cantidadVendida;
-        System.out.println("Producto vendido\n" + "\n" + p.getNombre() + "\n$" + p.getValor());
-        System.out.println("Cantidad vendida: " + cantidadVendida);
-        System.out.println("Total del producto: $"+ valorProductos);
-        valorTotalVenta += valorProductos;
+        System.out.println("Producto vendido");
         GestorBaseDatos.guardarCambiosProductos(productosParaEditar);
-
-
-        System.out.println("¿Desea añadir otro producto?\n(1)-> Si\n(2)-> No");
-        int opcion = teclado.nextInt();
-        try{
-            if (opcion == 1){
-                venderProducto();
-            }else if (opcion == 2){
-                System.out.println("El valor total es: $" + valorTotalVenta);
-                iniciarMenuPrincipalCajero();
-            }else{
-                System.err.println("Ingrese una opcion valida");
-            }
-        }catch (InputMismatchException e){
-            System.err.println("Ingrese una opcion valida");
-        }
+        iniciarMenuPrincipalCajero();
     }
     public Producto encontrarProductoPorCodigo(ArrayList<Producto> productos,int codigo){
         for  (Producto p : productos) {
@@ -91,6 +73,6 @@ public class Cajero extends Usuario {
                 "\nNombre: "+ getNombre() +
                 "\nRut: "+getRut() +
                 "\nNombre de Usuario: "+getNombreUsuario() +
-                "\nContrasena: "+getContrasena();
+                "\nContraseña: "+getContrasena();
     }
 }

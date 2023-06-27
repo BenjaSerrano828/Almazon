@@ -12,21 +12,30 @@ public class Sesion {
     }
     public void primerInicioSesion(){
         GestorBaseDatos.cargarDatosUsuarios(usuarios);
-        iniciarSesion();
+        obtenerDatosUsuario();
     }
-    public void iniciarSesion() {
+    public void obtenerDatosUsuario(){
         System.out.println("\n-----Menu Iniciar Sesion-----");
-        System.out.print("Ingrese su nombre de Usuario: ");
-        String nombreUsuarioIngresado = teclado.next();
-        System.out.print("Ingrese su contrasena: ");
-        String contrasenaIngresada = teclado.next();
-        if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)){
+        String nombreUsuarioIngresado = ingresarNombreUsuario();
+        String contrasenaIngresada = ingresarContrasena();
+        boolean direccionar = iniciarSesion(contrasenaIngresada,nombreUsuarioIngresado);
+
+        if (direccionar){
             Usuario usuarioEncontrado = buscarUsuario(usuarios, nombreUsuarioIngresado);
             direccionarMenu(usuarioEncontrado);
-        }else{
-            System.err.println("\nEl nombre de usuario y la contrasena no coinciden\n");
-            iniciarSesion();
+        }else {
+            obtenerDatosUsuario();
         }
+    }
+    public boolean iniciarSesion(String contrasenaIngresada, String nombreUsuarioIngresado) {
+        boolean valido;
+        if (validarSesion(usuarios,nombreUsuarioIngresado,contrasenaIngresada)){
+            valido = true;
+        }else{
+            System.err.println("\nEl nombre de usuario y la contraseña no coinciden");
+            valido = false;
+        }
+        return valido;
     }
     public Usuario buscarUsuario(ArrayList<Usuario> usuarios, String nombreUsuario) {
         for (Usuario u : usuarios) {
@@ -51,5 +60,20 @@ public class Sesion {
         }else if(u instanceof Cajero){
             ((Cajero) u).iniciarMenuPrincipalCajero();
         }
+    }
+
+    public boolean compararContrasena(String contra1, String contra2) {
+        if (contra1.equals(contra2)){
+            return true;
+        }
+        return false;
+    }
+    public String ingresarNombreUsuario() {
+        System.out.print("Ingrese su nombre de Usuario: ");
+        return teclado.next();
+    }
+    public String ingresarContrasena() {
+        System.out.print("Ingrese su contraseña: ");
+        return teclado.next();
     }
 }

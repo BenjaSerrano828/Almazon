@@ -1,4 +1,7 @@
 package usuarios;
+
+import java.util.Objects;
+
 public abstract class Usuario {
     protected String rut;
     protected String nombre;
@@ -41,5 +44,21 @@ public abstract class Usuario {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Usuario nuevo = (Usuario) obj;
+        return Objects.equals(this.getNombre(), nuevo.getNombre()) &&
+                Objects.equals(this.getRut(), nuevo.getRut()) &&
+                Objects.equals(this.getNombreUsuario(), nuevo.getNombreUsuario()) &&
+                Objects.equals(this.getContrasena(), nuevo.getContrasena());
     }
 }

@@ -1,19 +1,19 @@
-
-
 Admin
 Nombre: ADMIN SUPREMO
 Rut: aaa
 Nombre de Usuario: admin
-Contrasena: admin123
+Contraseña: admin123
 
 Admin
-Nombre: Benjamin Serrano
+Nombre: benja
 Rut: 20.587.734-7
-Nombre de Usuario: benja
-Contrasena: benja
+Nombre de Usuario: benja23
+Contraseña: benja23
 
-Cajero
-Nombre: Sebastian Torres
+
+
+Admin
+Nombre: benja
 Rut: 20.645.607-8
 Nombre de Usuario: seba
-Contrasena: seba
+Contraseña: seba
