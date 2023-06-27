@@ -61,13 +61,6 @@ public class Sesion {
             ((Cajero) u).iniciarMenuPrincipalCajero();
         }
     }
-
-    public boolean compararContrasena(String contra1, String contra2) {
-        if (contra1.equals(contra2)){
-            return true;
-        }
-        return false;
-    }
     public String ingresarNombreUsuario() {
         System.out.print("Ingrese su nombre de Usuario: ");
         return teclado.next();

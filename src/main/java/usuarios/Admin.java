@@ -313,52 +313,6 @@ public class Admin extends Usuario {
         String codigoString = "Codigo\nCodigo: " + codigo;
         GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt", codigoString);
     }
-    public void actualizarCodigo(String code){
-        GestorArchivo.escribirArchivo("ArchivosBD/codigo.txt",code);
-    }
-
-    private void generarSegunTipo(Producto p, String codigo) {
-        String productoString = p.toString();
-        GestorArchivo.nuevaLinea("ArchivosBD/productos.txt",productoString);
-        actualizarCodigo(codigo);
-        System.out.println("Producto registrado");
-        iniciarMenuPrincipalAdmin();
-    }
-
-    public Usuario registrarNuevoCajero(){
-        Scanner registrarNombre = new Scanner(System.in);
-        System.out.println("Ingrese en nombre del nuevo Cajero");
-        String nombre = registrarNombre.nextLine();
-        String rut;
-        do {
-            System.out.print("RUT con puntos y guion. Ej: 12.345.678-9"+
-                    "\nIngrese el rut del nuevo Cliente: ");
-            rut = teclado.next();
-        }while(!validarRut(rut));
-        System.out.println("Ingrese el nombre de usuario del nuevo Cajero");
-        String nombreUsuario = teclado.next();
-        System.out.println("Ingrese la contraseña del nuevo Cajero");
-        String contrasena = teclado.next();
-        Usuario cajero = new Cajero(rut,nombre,nombreUsuario,contrasena);
-        return cajero;
-    }
-    public Usuario registrarNuevoAdmin() {
-        Scanner registrarNombre = new Scanner(System.in);
-        System.out.print("\nIngrese en nombre del nuevo Admin");
-        String nombre = registrarNombre.nextLine();
-        String rut;
-        do {
-            System.out.println("RUT con puntos y guion. Ej: 12.345.678-9"+
-                    "\nIngrese el rut del nuevo Admin");
-            rut = teclado.next();
-        }while(!validarRut(rut));
-        System.out.println("Ingrese el nombre de usuario del nuevo Admin");
-        String nombreUsuario = teclado.next();
-        System.out.println("Ingrese la contraseña del nuevo Admin");
-        String contrasena = teclado.next();
-        Usuario admin = new Admin(rut,nombre,nombreUsuario,contrasena);
-        return admin;
-    }
 
     public void guardarUsuario(Usuario u){
         usuariosParaEditar.add(u);
@@ -407,18 +361,6 @@ public class Admin extends Usuario {
         return teclado.next();
     }
 
-    public boolean verificarRutRepetido(String rut) {
-        boolean verificar = false;
-        for(Usuario u: usuariosParaEditar){
-            String rutAComparar = u.getRut();
-            if(rutAComparar.equals(rut)){
-                verificar = true;
-                break;
-            }
-        }
-        return verificar;
-    }
-
     public Usuario registrarNuevoUsuario(int opcion, String nombre, String nombreUsuario, String rut, String contrasena) {
 
         switch (opcion){
@@ -465,61 +407,3 @@ public class Admin extends Usuario {
     }
 
 }
-/*
-test
-- crear nombre de los test
-- crear instancia de admin
-- verificar en el txt que el rut existe
-- crear rut a comparar
-- boolean repetido = admin.verificarRutRepetido();
-- hacer fallar el test
-
-admin
-- crear metodo verificarRutRepetido(); vacio
-
-test
-- runnear sin el return
-
-admin
-- crear return en el metodo
-- return true //porque queremos que esté repetido
-
-test
-- runnear
-- va a dar falso positivo
-- hacerlo fallar creando el assertTrue(flag)
-
-admin
-- return false
-
-test
-- runnear y falla
-
-admin
--Verificar = false y return verificar
-
-Test
-- Runear test y fallar
-- Le paso el rut como parámetro al metodo
-
-Admin
-- Agrego el parámetro string rut
-
-Test
-- Runnear y falla
-
-Admin
-- Hacer for each
-- Hacer if
-
-Test
-- Runnear y falla
-
-Admin
-- Cargamos los datos en el metodo
-
-Test
-- Runnear y pasa el test
-- Refactorizamos declaró Flag en una linea
-
- */

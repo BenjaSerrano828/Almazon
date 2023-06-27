@@ -3,17 +3,3 @@ Nombre: ADMIN SUPREMO
 Rut: aaa
 Nombre de Usuario: admin
 Contraseña: admin123
-
-Admin
-Nombre: benja
-Rut: 20.587.734-7
-Nombre de Usuario: benja23
-Contraseña: benja23
-
-
-
-Admin
-Nombre: benja
-Rut: 20.645.607-8
-Nombre de Usuario: seba
-Contraseña: seba
