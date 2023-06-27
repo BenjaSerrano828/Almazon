@@ -17,8 +17,7 @@ public class Admin extends Usuario {
         super(rut, nombre, nombreUsuario, contrasena);
     }
     public void iniciarMenuPrincipalAdmin() {
-        usuariosParaEditar.clear();
-        GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
+        recargarDatosUsuarios();
         int opcion = -1;
         do{
             try{
@@ -405,5 +404,8 @@ public class Admin extends Usuario {
                 "\nNombre de Usuario: "+getNombreUsuario() +
                 "\nContraseña: "+getContrasena();
     }
-
+    private void recargarDatosUsuarios() {
+        usuariosParaEditar.clear();
+        GestorBaseDatos.cargarDatosUsuarios(usuariosParaEditar);
+    }
 }
