@@ -370,8 +370,8 @@ public class Admin extends Usuario {
     public void obtenerDatosNuevoUsuario(){
         Scanner registro = new Scanner(System.in);
         String rut = obtenerNuevoRut();
-        boolean validar = false;
-        if(validar == validarRut(rut)){
+
+        if(!validarRut(rut)){
             obtenerDatosNuevoUsuario();
         }
 
