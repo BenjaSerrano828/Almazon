@@ -1,6 +1,0 @@
-Admin
-Nombre: ADMIN SUPREMO
-Rut: aaa
-Nombre de Usuario: admin
-Contraseña: admin123
-
